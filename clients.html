@@ -3,41 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Clients | Audio Video Solutions</title>
-    <!-- Google Fonts for professional typography -->
+    <title>Our Clients | Audio Video Solutions (AVS)</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #0b0f19;
-            --card-bg: #131d31;
-            --card-hover: #1b2845;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-blue: #3b82f6;
-            --accent-blue-hover: #2563eb;
-            --border-color: #1e293b;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Header / Navigation Bar */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: #0b0f19; color: #f8fafc; line-height: 1.6; }
+        
+        /* Uniform Right-Aligned Header Style */
         header {
             background: rgba(11, 15, 25, 0.85);
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid #1e293b;
             position: fixed;
             top: 0;
             left: 0;
@@ -48,212 +24,49 @@
             align-items: center;
             padding: 1.2rem 5%;
         }
-
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-main);
-            letter-spacing: -0.5px;
-            text-decoration: none;
-        }
-
-        .logo span {
-            color: var(--accent-blue);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--accent-blue);
-        }
+        .logo { font-size: 1.25rem; font-weight: 700; color: #f8fafc; text-decoration: none; letter-spacing: -0.5px; }
+        .logo span { color: #3b82f6; }
+        nav { display: flex; gap: 2rem; }
+        nav a { color: #94a3b8; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.3s ease; }
+        nav a:hover, nav a.active { color: #3b82f6; }
 
         /* Hero Section */
-        .page-hero {
-            padding: 9rem 5% 3rem 5%;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-            animation: fadeInDown 0.8s ease-out;
-        }
+        .page-hero { padding: 10rem 5% 3rem 5%; text-align: center; max-width: 800px; margin: 0 auto; }
+        .page-hero h1 { font-size: 2.75rem; font-weight: 800; margin-bottom: 1rem; color: #ffffff; letter-spacing: -1px; }
+        .page-hero h1 span { color: #3b82f6; }
+        .page-hero p { color: #94a3b8; font-size: 1.15rem; }
 
-        .page-hero h1 {
-            font-size: 2.75rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
-        }
+        /* Counter Section */
+        .counter-banner { max-width: 1100px; margin: 2rem auto 4rem auto; padding: 0 5%; }
+        .counter-card { background: linear-gradient(135deg, #131d31, #1e293b); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 2.5rem; text-align: center; box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.15); }
+        .counter-number { font-size: 3.5rem; font-weight: 800; color: #ffffff; letter-spacing: -1px; margin-bottom: 0.5rem; background: linear-gradient(135deg, #ffffff, #93c5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .counter-label { font-size: 1.2rem; color: #94a3b8; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
 
-        .page-hero h1 span {
-            background: linear-gradient(135deg, #60a5fa, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        /* Clients Grid */
+        .clients-container { max-width: 1200px; margin: 0 auto; padding: 0 5% 6rem 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+        .client-card { background-color: #131d31; border: 1px solid #1e293b; border-radius: 12px; padding: 1.5rem 2rem; display: flex; align-items: center; gap: 1.25rem; transition: transform 0.3s ease, border-color 0.3s ease; }
+        .client-card:hover { transform: translateY(-5px); background-color: #1b2845; border-color: rgba(59, 130, 246, 0.4); box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.4); }
+        .client-icon { width: 45px; height: 45px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #3b82f6; font-size: 1.1rem; }
+        .client-info h3 { font-size: 1rem; font-weight: 600; color: #f8fafc; letter-spacing: -0.2px; }
+        .client-info span { font-size: 0.85rem; color: #94a3b8; }
 
-        .page-hero p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        /* Animated Counter Section */
-        .counter-banner {
-            max-width: 1100px;
-            margin: 2rem auto 4rem auto;
-            padding: 0 5%;
-        }
-
-        .counter-card {
-            background: linear-gradient(135deg, #131d31, #1e293b);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 16px;
-            padding: 2.5rem;
-            text-align: center;
-            box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.15);
-            animation: fadeInUp 0.8s ease-out 0.2s backwards;
-        }
-
-        .counter-number {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: -1px;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #ffffff, #93c5fd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .counter-label {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Clients Grid Layout */
-        .clients-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 5% 6rem 5%;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .client-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 1.25rem;
-            transition: var(--transition);
-            animation: fadeInUp 0.8s ease-out backwards;
-        }
-
-        /* Stagger animations */
-        .client-card:nth-child(1) { animation-delay: 0.1s; }
-        .client-card:nth-child(2) { animation-delay: 0.2s; }
-        .client-card:nth-child(3) { animation-delay: 0.3s; }
-        .client-card:nth-child(4) { animation-delay: 0.4s; }
-        .client-card:nth-child(5) { animation-delay: 0.5s; }
-        .client-card:nth-child(6) { animation-delay: 0.6s; }
-        .client-card:nth-child(7) { animation-delay: 0.7s; }
-        .client-card:nth-child(8) { animation-delay: 0.8s; }
-        .client-card:nth-child(9) { animation-delay: 0.9s; }
-        .client-card:nth-child(10) { animation-delay: 1.0s; }
-
-        .client-card:hover {
-            transform: translateY(-5px);
-            background-color: var(--card-hover);
-            border-color: rgba(59, 130, 246, 0.4);
-            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.4);
-        }
-
-        .client-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            color: var(--accent-blue);
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-
-        .client-info h3 {
-            font-size: 1.05rem;
-            font-weight: 600;
-            color: var(--text-main);
-            letter-spacing: -0.2px;
-        }
-
-        .client-info span {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* Footer */
-        footer {
-            background-color: #070913;
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-            padding: 3rem 5%;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        footer p span {
-            color: var(--text-main);
-            font-weight: 500;
-        }
-
-        /* Keyframe Animations */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media(max-width: 768px) {
-            .page-hero h1 { font-size: 2rem; }
-            .counter-number { font-size: 2.75rem; }
-            .nav-links { display: none; }
-        }
+        footer { background-color: #070913; border-top: 1px solid #1e293b; text-align: center; padding: 3rem 5%; color: #94a3b8; font-size: 0.9rem; }
+        footer span { color: #f8fafc; font-weight: 500; }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Uniform Header -->
     <header>
         <a href="index.html" class="logo">Audio Video <span>Solutions</span></a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="products.html">Products</a></li>
-            <li><a href="clients.html" class="active">Clients</a></li>
-            <li><a href="index.html#contact">Contact</a></li>
-        </ul>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="products.html">Products</a>
+            <a href="clients.html" class="active">Clients</a>
+            <a href="projects.html">Projects</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
     </header>
 
     <!-- Page Hero -->
@@ -272,102 +85,21 @@
 
     <!-- Clients Grid -->
     <main class="clients-container">
-
-        <!-- Client 1 -->
-        <div class="client-card">
-            <div class="client-icon">🏥</div>
-            <div class="client-info">
-                <h3>MIDAS HOSPITAL NAGPUR</h3>
-                <span>Healthcare & Medical AV</span>
-            </div>
-        </div>
-
-        <!-- Client 2 -->
-        <div class="client-card">
-            <div class="client-icon">🏥</div>
-            <div class="client-info">
-                <h3>Tender Palm Super Speciality Hospital Lucknow</h3>
-                <span>Advanced Medical Infrastructure</span>
-            </div>
-        </div>
-
-        <!-- Client 3 -->
-        <div class="client-card">
-            <div class="client-icon">⚙️</div>
-            <div class="client-info">
-                <h3>SANY INDIA PVT LTD</h3>
-                <span>Heavy Industry & Corporate AV</span>
-            </div>
-        </div>
-
-        <!-- Client 4 -->
-        <div class="client-card">
-            <div class="client-icon">🛢️</div>
-            <div class="client-info">
-                <h3>CHENNAI PETROLEUM</h3>
-                <span>Energy & Enterprise Solutions</span>
-            </div>
-        </div>
-
-        <!-- Client 5 -->
-        <div class="client-card">
-            <div class="client-icon">🛡️</div>
-            <div class="client-info">
-                <h3>Armament Research & Development Establishment (ARDE)</h3>
-                <span>Defense Research & Display Systems</span>
-            </div>
-        </div>
-
-        <!-- Client 6 -->
-        <div class="client-card">
-            <div class="client-icon">🛡️</div>
-            <div class="client-info">
-                <h3>The Defence Research and Development Organisation - DRDO</h3>
-                <span>National Defense & Communication</span>
-            </div>
-        </div>
-
-        <!-- Client 7 -->
-        <div class="client-card">
-            <div class="client-icon">🌤️</div>
-            <div class="client-info">
-                <h3>INDIAN INSTITUTE OF TROPICAL METEOROLOGY</h3>
-                <span>Scientific Research & Conference Systems</span>
-            </div>
-        </div>
-
-        <!-- Client 8 -->
-        <div class="client-card">
-            <div class="client-icon">💻</div>
-            <div class="client-info">
-                <h3>Topsource Infotech Solutions Pvt Ltd</h3>
-                <span>IT & Corporate Boardrooms</span>
-            </div>
-        </div>
-
-        <!-- Client 9 -->
-        <div class="client-card">
-            <div class="client-icon">🏢</div>
-            <div class="client-info">
-                <h3>Redbrick</h3>
-                <span>Commercial Workspaces & AV</span>
-            </div>
-        </div>
-
-        <!-- Client 10 -->
-        <div class="client-card">
-            <div class="client-icon">⚕️</div>
-            <div class="client-info">
-                <h3>NUBENO HEALTHCARE PRIVATE LIMITED</h3>
-                <span>Healthcare & Digital Conferencing</span>
-            </div>
-        </div>
-
+        <div class="client-card"><div class="client-icon">🏥</div><div class="client-info"><h3>MIDAS HOSPITAL NAGPUR</h3><span>Healthcare & Medical AV</span></div></div>
+        <div class="client-card"><div class="client-icon">🏥</div><div class="client-info"><h3>Tender Palm Super Speciality Hospital Lucknow</h3><span>Advanced Medical Infrastructure</span></div></div>
+        <div class="client-card"><div class="client-icon">⚙️</div><div class="client-info"><h3>SANY INDIA PVT LTD</h3><span>Heavy Industry & Corporate AV</span></div></div>
+        <div class="client-card"><div class="client-icon">🛢️</div><div class="client-info"><h3>CHENNAI PETROLEUM</h3><span>Energy & Enterprise Solutions</span></div></div>
+        <div class="client-card"><div class="client-icon">🛡️</div><div class="client-info"><h3>Armament Research & Development Establishment (ARDE)</h3><span>Defense Research & Display Systems</span></div></div>
+        <div class="client-card"><div class="client-icon">🛡️</div><div class="client-info"><h3>The Defence Research and Development Organisation - DRDO</h3><span>National Defense & Communication</span></div></div>
+        <div class="client-card"><div class="client-icon">🌤️</div><div class="client-info"><h3>INDIAN INSTITUTE OF TROPICAL METEOROLOGY</h3><span>Scientific Research & Conference Systems</span></div></div>
+        <div class="client-card"><div class="client-icon">💻</div><div class="client-info"><h3>Topsource Infotech Solutions Pvt Ltd</h3><span>IT & Corporate Boardrooms</span></div></div>
+        <div class="client-card"><div class="client-icon">🏢</div><div class="client-info"><h3>Redbrick</h3><span>Commercial Workspaces & AV</span></div></div>
+        <div class="client-card"><div class="client-icon">⚕️</div><div class="client-info"><h3>NUBENO HEALTHCARE PRIVATE LIMITED</h3><span>Healthcare & Digital Conferencing</span></div></div>
     </main>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2026 <span>Audio Video Solutions</span>. All rights reserved. | Contact: <a href="mailto:sales@avsolutionsapac.in" style="color: var(--accent-blue); text-decoration: none;">sales@avsolutionsapac.in</a></p>
+        <p>&copy; 2026 <span>Audio Video Solutions</span>. All rights reserved. | Contact: <a href="mailto:sales@avsolutionsapac.in" style="color: #3b82f6; text-decoration: none;">sales@avsolutionsapac.in</a></p>
     </footer>
 
     <!-- Counter Animation Script -->
@@ -375,6 +107,7 @@
         let counted = false;
         window.addEventListener('scroll', function() {
             const counterElement = document.getElementById('counter');
+            if(!counterElement) return;
             const position = counterElement.getBoundingClientRect().top;
             const screenPosition = window.innerHeight;
 
@@ -382,7 +115,7 @@
                 counted = true;
                 let count = 4950;
                 const target = 5000;
-                const speed = 40; // milliseconds per step
+                const speed = 40;
 
                 const updateCount = () => {
                     if(count <= target) {
