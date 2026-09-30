@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products | Audio Video Solutions</title>
+    <!-- Google Fonts for professional typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #131d31;
+            --card-hover: #1b2845;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-blue: #3b82f6;
+            --accent-blue-hover: #2563eb;
+            --border-color: #1e293b;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header / Navigation Bar */
+        header {
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent-blue);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-blue);
+        }
+
+        /* Hero Section with Animation */
+        .page-hero {
+            padding: 9rem 5% 4rem 5%;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .page-hero h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .page-hero h1 span {
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Products Grid Layout */
+        .products-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem 5% 4rem 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Product Card Styling */
+        .product-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition);
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            background-color: var(--card-hover);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .product-img-wrapper {
+            width: 100%;
+            height: 200px;
+            background-color: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-img-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .product-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.25rem;
+        }
+
+        /* Inquiry Button Style */
+        .inquire-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: var(--accent-blue);
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+        }
+
+        .inquire-btn:hover {
+            background-color: var(--accent-blue-hover);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Brands Section Styles */
+        .brands-section {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 3rem 5% 5rem 5%;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .brands-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.5px;
+        }
+
+        .brands-section p {
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            font-size: 1.05rem;
+        }
+
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .brand-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            transition: var(--transition);
+        }
+
+        .brand-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-4px);
+            background-color: var(--card-hover);
+        }
+
+        .brand-card img {
+            max-width: 100%;
+            max-height: 50px;
+            object-fit: contain;
+            filter: grayscale(20%);
+            transition: var(--transition);
+        }
+
+        .brand-card:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #070913;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            padding: 3rem 5%;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer p span {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .page-hero h1 { font-size: 2rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="logo">Audio Video <span>Solutions</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html" class="active">Products</a></li>
+            <li><a href="index.html#clients">Clients</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <h1>Professional <span>Hardware Catalog</span></h1>
+        <p>Explore our enterprise-grade audio-visual systems, smart meeting room components, and installation hardware engineered for performance.</p>
+    </section>
+
+    <!-- Products Grid -->
+    <main class="products-container">
+
+        <!-- 1. Projectors -->
+        <div class="product-card">
+            <div class="product-img-wrapper">
+                <img src="1000108128.png" alt="Projectors">
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3 class="product-title">Projectors</h3>
+                    <p class="product-desc">High-brightness professional projection systems designed for boardrooms and large auditoriums[span_0](start_span)[span_0](end_span).</p>
+                </div>
+                <a href="mailto:sales@avsolutionsapac.in?subject=Inquiry%20Regarding%20Projectors" class="inquire-btn">Inquire Now</a>
+            </div>
+        </div>
+
+        <!-- 2. VC Cameras -->
+        <div class="product-card">
+            <div class="product-img-wrapper">
+                <img src="1000108129.png" alt="VC Cameras">
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3 class="product-title">VC Cameras</h3>
+                    <p class="product-desc">Enterprise-grade video conferencing tracking cameras delivering crisp optics and smooth control[span_1](start_span)[span_1](end_span).</p>
+                </div>
+                <a href="mailto:sales@avsolutionsapac.in?subject=Inquiry%20Regarding%20VC%20Cameras" class="inquire-btn">Inquire Now</a>
+            </div>
+        </div>
+
+        <!-- 3. Bar Cameras -->
+        <div class="product-card">
+            <div class="product-img-wrapper">
+                <img src="1000108130.png" alt="Bar Cameras">
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3 class="product-title">Bar Cameras</h3>
+                    <p class="product-desc">All-in-one meeting room collaboration video bars featuring integrated high-end audio arrays[span_2](start_span)[span_2](end_span).</p>
+                </div>
+                <a href="mailto:sales@avsolutionsapac.in?subject=Inquiry%20Regarding%20Bar%20Cameras" class="inquire-btn">Inquire Now</a>
+            </div>
+        </div>
+
+        <!-- 4. HDMI Switchers -->
+        <div class="product-card">
+            <div class="product-img-wrapper">
+                <img src="1000108131.png" alt="HDMI Switchers">
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3 class="product-title">HDMI Switchers</h3>
+                    <p class="product-desc">Seamless auto-switchers and matrix routers (such as Kramer) for reliable multi-source signal routing[span_3](start_span)[span_3](end_span).</p>
+                </div>
+                <a href="mailto:sales@avsolutionsapac.in?subject=Inquiry%20Regarding%20HDMI%20Switchers" class="inquire-btn">Inquire Now</a>
+            </div>
+        </div>
+
+        <!-- 5. AI Powered PTZ Camera -->
+        <div class="product-card">
+            <div class="product-img-wrapper">
+                <img src="1000108134.jpg" alt="AI Powered PTZ Camera">
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3 class="product-title">AI Powered PTZ Camera</h3>
+                    <p class="product-desc">Smart tracking cameras equipped with AI auto-framing, gesture controls, and fluid movement[span_4](start_span)[span_4](end_span).</p>
+                </div>
+                <a href="mailto:sales@avsolutionsapac.in?subject=Inquiry%20Regarding%20AI%20Powered%20PTZ%20Camera" class="inquire-btn">Inquire Now</a>
+            </div>
+        </div>
+
+        <!-- 6. Multi-Viewers -->
+        <div class="product-card">
+            <div class="product-img-wrapper">
+                <img src="1000108132.jpg" alt="Multi-Viewers">
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3 class="product-title">Multi-Viewers</h3>
+                    <p class="product-desc">Multi-window display processors designed for monitoring, switching, and managing multiple feeds[span_5](start_span)[span_5](end_span).</p>
+                </div>
+                <a href="mailto:sales@avsolutionsapac.in?subject=Inquiry%20Regarding%20Multi-Viewers" class="inquire-btn">Inquire Now</a>
+            </div>
+        </div>
+
+        <!-- 7. DSP -->
+        <div class="product-card">
+            <div class="product-img-wrapper">
+                <img src="1000108136.png" alt="DSP">
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3 class="product-title">Digital Sound Processor (DSP)</h3>
+                    <p class="product-desc">Advanced audio matrix processors featuring built-in acoustic echo cancellation for pristine room audio[span_6](start_span)[span_6](end_span).</p>
+                </div>
+                <a href="mailto:sales@avsolutionsapac.in?subject=Inquiry%20Regarding%20DSP" class="inquire-btn">Inquire Now</a>
+            </div>
+        </div>
+
+        <!-- 8. Microphones -->
+        <div class="product-card">
+            <div class="product-img-wrapper">
+                <img src="1000108137.png" alt="Microphones">
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3 class="product-title">Microphones</h3>
+                    <p class="product-desc">Professional conference gooseneck mics, wireless lavaliers, and dynamic vocal microphones[span_7](start_span)[span_7](end_span)[span_8](start_span)[span_8](end_span)[span_9](start_span)[span_9](end_span).</p>
+                </div>
+                <a href="mailto:sales@avsolutionsapac.in?subject=Inquiry%20Regarding%20Microphones" class="inquire-btn">Inquire Now</a>
+            </div>
+        </div>
+
+        <!-- 9. Android Display -->
+        <div class="product-card">
+            <div class="product-img-wrapper">
+                <img src="1000108140.png" alt="Android Display">
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3 class="product-title">Android Commercial Display</h3>
+                    <p class="product-desc">4K Ultra-HD smart commercial touch screens built for interactive collaboration and digital signage[span_10](start_span)[span_10](end_span).</p>
+                </div>
+                <a href="mailto:sales@avsolutionsapac.in?subject=Inquiry%20Regarding%20Android%20Display" class="inquire-btn">Inquire Now</a>
+            </div>
+        </div>
+
+        <!-- 10. Cable Cubby -->
+        <div class="product-card">
+            <div class="product-img-wrapper">
+                <img src="1000108141.png" alt="Cable Cubby">
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3 class="product-title">Cable Cubby</h3>
+                    <p class="product-desc">In-desk pop-up desktop connection boxes with integrated power sockets and modular data ports[span_11](start_span)[span_11](end_span).</p>
+                </div>
+                <a href="mailto:sales@avsolutionsapac.in?subject=Inquiry%20Regarding%20Cable%20Cubby" class="inquire-btn">Inquire Now</a>
+            </div>
+        </div>
+
+        <!-- 11. Cables -->
+        <div class="product-card">
+            <div class="product-img-wrapper">
+                <img src="1000108135.png" alt="Cables">
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3 class="product-title">Professional Cables</h3>
+                    <p class="product-desc">High-speed, gold-plated interconnects and bulk cabling designed for zero signal degradation[span_12](start_span)[span_12](end_span).</p>
+                </div>
+                <a href="mailto:sales@avsolutionsapac.in?subject=Inquiry%20Regarding%20Professional%20Cables" class="inquire-btn">Inquire Now</a>
+            </div>
+        </div>
+
+        <!-- 12. 4K Live-Streaming Audio & Video Recorder Device -->
+        <div class="product-card">
+            <div class="product-img-wrapper">
+                <img src="1000104537.jpg" alt="4K Live-Streaming Recorder Device">
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3 class="product-title">4K Live-Streaming & Recorder System</h3>
+                    <p class="product-desc">Heavy-duty mobile rack and cart recording systems engineered for professional live production and capture[span_13](start_span)[span_13](end_span).</p>
+                </div>
+                <a href="mailto:sales@avsolutionsapac.in?subject=Inquiry%20Regarding%204K%20Live-Streaming%20Recorder" class="inquire-btn">Inquire Now</a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Trusted Brands We Deal In Section -->
+    <section class="brands-section">
+        <h2>Trusted Brands We Deal In</h2>
+        <p>We partner with industry-leading manufacturers to deliver certified, high-performance AV systems.</p>
+        <div class="brands-grid">
+            <div class="brand-card"><img src="1000094944.png" alt="Cisco"></div>
+            <div class="brand-card"><img src="1000094945.png" alt="Harman"></div>
+            <div class="brand-card"><img src="1000094947.jpg" alt="Crestron"></div>
+            <div class="brand-card"><img src="1000094948.png" alt="Kramer"></div>
+            <div class="brand-card"><img src="1000094942.webp" alt="Yamaha"></div>
+            <div class="brand-card"><img src="1000094943.jpg" alt="BlueStream"></div>
+            <div class="brand-card"><img src="1000094941.png" alt="BenQ"></div>
+            <div class="brand-card"><img src="1000094940.png" alt="Philips"></div>
+            <div class="brand-card"><img src="1000094939.png" alt="AVer"></div>
+            <div class="brand-card"><img src="1000094938.png" alt="LG"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 <span>Audio Video Solutions</span>. All rights reserved. | Contact: <a href="mailto:sales@avsolutionsapac.in" style="color: var(--accent-blue); text-decoration: none;">sales@avsolutionsapac.in</a></p>
+    </footer>
+
+</body>
+</html>
