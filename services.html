@@ -3,101 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services | Audio Video Solutions</title>
+    <title>Services | Audio Video Solutions (AVS)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f4f7f6; color: #333; line-height: 1.6; }
-        header { background: #0f172a; color: #fff; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .logo-area { font-size: 24px; font-weight: bold; color: #38bdf8; }
-        nav a { color: #fff; text-decoration: none; margin-left: 20px; font-size: 15px; }
-        nav a:hover, nav a.active { color: #38bdf8; }
-        .page-header { background: #1e293b; color: #fff; text-align: center; padding: 60px 20px; }
-        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
-        .service-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
-        .service-card { background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .service-card h3 { color: #0f172a; margin-bottom: 12px; font-size: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
-        .service-card ul { list-style-type: disc; padding-left: 20px; color: #475569; }
-        .service-card li { margin-bottom: 8px; }
-        footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 30px 20px; margin-top: 50px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: #0b0f19; color: #f8fafc; line-height: 1.6; }
+        
+        /* Uniform Right-Aligned Header Style */
+        header {
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #1e293b;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+        }
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #f8fafc;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        .logo span { color: #3b82f6; }
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+        nav a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+        nav a:hover, nav a.active { color: #3b82f6; }
+
+        /* Page Hero Section */
+        .page-hero {
+            padding: 10rem 5% 4rem 5%;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .page-hero h1 { font-size: 2.75rem; font-weight: 800; margin-bottom: 1rem; color: #ffffff; letter-spacing: -1px; }
+        .page-hero h1 span { color: #3b82f6; }
+        .page-hero p { color: #94a3b8; font-size: 1.15rem; }
+
+        /* Services Grid */
+        .container { max-width: 1200px; margin: 0 auto 5rem auto; padding: 0 5%; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .card { background: #131d31; border: 1px solid #1e293b; padding: 2.5rem; border-radius: 12px; transition: transform 0.3s ease, border-color 0.3s ease; }
+        .card:hover { transform: translateY(-5px); border-color: #3b82f6; box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.5); }
+        .card h3 { margin-bottom: 1rem; color: #f8fafc; font-size: 1.25rem; font-weight: 600; }
+        .card ul { list-style-type: none; padding-left: 0; }
+        .card ul li { color: #94a3b8; font-size: 0.95rem; margin-bottom: 0.75rem; position: relative; padding-left: 1.25rem; }
+        .card ul li::before { content: "•"; color: #3b82f6; position: absolute; left: 0; font-weight: bold; }
+
+        footer { background-color: #070913; border-top: 1px solid #1e293b; text-align: center; padding: 3rem 5%; color: #94a3b8; font-size: 0.9rem; }
+        footer span { color: #f8fafc; font-weight: 500; }
     </style>
 </head>
 <body>
 
+    <!-- Uniform Right-Aligned Header -->
     <header>
-        <div class="logo-area">
-    <a href="index.html">
-        <img src="logo.jpg" alt="Audio Video Solutions Logo" style="height: 45px; width: auto; vertical-align: middle;">
-    </a>
-</div>
+        <a href="index.html" class="logo">Audio Video <span>Solutions</span></a>
         <nav>
-            <<header>
-               <a href="index.html" class="logo">Audio Video <span>Solutions</span></a>
-               <nav>
-                   <a href="index.html">Home</a>
-                   <a href="services.html">Services</a>
-                   <a href="products.html">Products</a>
-                   <a href="clients.html">Clients</a>
-                   <a href="projects.html">Projects</a>
-                   <a href="contact.html">Contact Us</a>
-               </nav>
-           </header>
+            <a href="index.html">Home</a>
+            <a href="services.html" class="active">Services</a>
+            <a href="products.html">Products</a>
+            <a href="clients.html">Clients</a>
+            <a href="projects.html">Projects</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+    </header>
 
-    <div class="page-header">
-        <h1>Our Products & Services</h1>
+    <!-- Page Hero -->
+    <div class="page-hero">
+        <h1>Our Products & <span>Services</span></h1>
         <p>End-to-end solutions: Consultation, System Design, Supply, Installation, Integration, & Commissioning.</p>
     </div>
 
+    <!-- Services Grid Container -->
     <div class="container">
-        <div class="service-list">
-            <div class="service-card">
+        <div class="grid">
+            <div class="card">
                 <h3>1. Video Conferencing Solutions</h3>
                 <ul>
                     <li>Systems from Avaya, Poly, PeopleLink, Logitech, and leading brands</li>
                     <li>Professional meeting and conference room configurations</li>
                 </ul>
             </div>
-            <div class="service-card">
+            <div class="card">
                 <h3>2. Commercial & Interactive Displays</h3>
                 <ul>
                     <li>Commercial displays and professional-grade screens</li>
                     <li>Interactive flat panels and touch displays</li>
-                    <li>Digital signage and Active LED solutions</li>
+                    <li>Digital signage and Active LED displays</li>
                 </ul>
             </div>
-            <div class="service-card">
+            <div class="card">
                 <h3>3. AV Integration & System Design</h3>
                 <ul>
                     <li>Boardroom, training room, and conference room integration</li>
                     <li>Auditorium AV solutions and customized wiring</li>
                 </ul>
             </div>
-            <div class="service-card">
-                <h3>4. IT Infrastructure & Networking</h3>
-                <ul>
-                    <li>Structured passive networking (Cat-6, Cat-7, Fiber)</li>
-                    <li>Public & Private cloud configurations, server & storage</li>
-                    <li>FMS and Annual Maintenance Contracts (AMC)</li>
-                </ul>
-            </div>
-            <div class="service-card">
-                <h3>5. Zoom & Teams Solutions</h3>
-                <ul>
-                    <li>Zoom / Zoom Rooms licenses & subscriptions</li>
-                    <li>Microsoft Teams Rooms (MTR) integrations</li>
-                </ul>
-            </div>
-            <div class="service-card">
-                <h3>6. Security & Power Solutions</h3>
-                <ul>
-                    <li>CCTV surveillance installations & networking setup</li>
-                    <li>UPS and power backup systems for AV/IT infrastructures</li>
-                </ul>
-            </div>
         </div>
     </div>
 
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Audio Video Solutions (AVS). Contact: sales@avsolutionsapac.in</p>
+        <p>&copy; 2026 <span>Audio Video Solutions</span>. All rights reserved. | Contact: <a href="mailto:sales@avsolutionsapac.in" style="color: #3b82f6; text-decoration: none;">sales@avsolutionsapac.in</a></p>
     </footer>
 
 </body>
