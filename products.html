@@ -306,4 +306,29 @@
         <img class="lightbox-content" id="lightbox-img" alt="Enlarged Product View">
     </div>
 
-    <!-- Foote
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 <span>Audio Video Solutions</span>. All rights reserved. | Contact: <a href="mailto:sales@avsolutionsapac.in" style="color: #3b82f6; text-decoration: none;">sales@avsolutionsapac.in</a></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        function toggleMenu() {
+            const nav = document.getElementById('nav-menu');
+            nav.classList.toggle('active');
+        }
+
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = imageSrc;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+        }
+    </script>
+</body>
+</html>
