@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | Audio Video Solutions (AVS)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: #0b0f19; color: #f8fafc; line-height: 1.6; overflow-x: hidden; }
+        
+        /* Uniform Header Style */
+        header {
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #1e293b;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 5%;
+        }
+        .logo { font-size: 1.25rem; font-weight: 700; color: #f8fafc; text-decoration: none; display: flex; align-items: center; }
+        .logo img { height: 60px; width: auto; object-fit: contain; border-radius: 4px; }
+        nav { display: flex; gap: 2rem; }
+        nav a { color: #94a3b8; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.3s ease; }
+        nav a:hover, nav a.active { color: #3b82f6; }
+
+        /* Mobile Menu Toggle Button */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 22px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .menu-toggle span {
+            width: 100%;
+            height: 3px;
+            background-color: #f8fafc;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* Page Hero */
+        .page-hero { padding: 9rem 5% 2rem 5%; text-align: center; max-width: 900px; margin: 0 auto; animation: fadeInDown 0.8s ease-out; }
+        .page-hero h1 { font-size: 2.75rem; font-weight: 800; margin-bottom: 1rem; color: #ffffff; letter-spacing: -1px; }
+        .page-hero h1 span { color: #3b82f6; }
+        .page-hero p { color: #94a3b8; font-size: 1.15rem; margin-bottom: 2rem; }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Search & Filter Controls */
+        .controls-section { max-width: 1300px; margin: 0 auto 2.5rem auto; padding: 0 5%; display: flex; flex-direction: column; gap: 1.5rem; align-items: center; }
+        
+        .search-bar { width: 100%; max-width: 500px; position: relative; }
+        .search-bar input {
+            width: 100%;
+            background: #131d31;
+            border: 1px solid #1e293b;
+            padding: 0.85rem 1.25rem 0.85rem 3rem;
+            border-radius: 50px;
+            color: #f8fafc;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .search-bar input:focus { border-color: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); }
+        .search-bar::before {
+            content: "🔍";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+        }
+
+        .filter-tabs { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+        .filter-btn {
+            background: #131d31;
+            border: 1px solid #1e293b;
+            color: #94a3b8;
+            padding: 0.6rem 1.25rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filter-btn:hover { background: #1e293b; color: #f8fafc; transform: translateY(-2px); }
+        .filter-btn.active { background: #3b82f6; color: #ffffff; border-color: #3b82f6; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); }
+
+        /* Products Grid */
+        .products-section { padding: 0 5% 5rem 5%; }
+        .products-container { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        
+        .product-card {
+            background-color: #131d31;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            animation: fadeInUp 0.6s ease-out;
+            position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: #3b82f6;
+            box-shadow: 0 20px 30px -10px rgba(59, 130, 246, 0.25);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(6px);
+            color: #3b82f6;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #1e293b;
+            z-index: 2;
+        }
+
+        .product-img-wrapper {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #0f172a, #131d31);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 15px;
+            cursor: pointer;
+            position: relative;
+        }
+        .product-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+        .product-card:hover .product-img-wrapper img { transform: scale(1.08); }
+        
+        .product-img-wrapper::after {
+            content: "🔍 Click to Enlarge";
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(11, 15, 25, 0.8);
+            color: #93c5fd;
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .product-img-wrapper:hover::after { opacity: 1; }
+
+        .product-info { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+        .product-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; color: #f8fafc; letter-spacing: -0.3px; }
+        .product-desc { font-size: 0.9rem; color: #94a3b8; margin-bottom: 1.25rem; }
+        
+        .inquire-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: #3b82f6;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+        .inquire-btn:hover { background-color: #2563eb; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4); }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #94a3b8;
+            font-size: 1.1rem;
+            display: none;
+        }
+
+        /* Brands Section */
+        .brands-section { max-width: 1200px; margin: 4rem auto; padding: 0 5%; text-align: center; }
+        .brands-title { font-size: 1.75rem; font-weight: 700; color: #f8fafc; margin-bottom: 2rem; letter-spacing: -0.5px; }
+        .brands-title span { color: #3b82f6; }
+        .brands-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.5rem; align-items: center; justify-content: center; }
+        .brand-card { background-color: #ffffff; border: 1px solid #1e293b; border-radius: 12px; padding: 1.2rem; height: 95px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .brand-card:hover { transform: translateY(-6px) scale(1.03); border-color: #3b82f6; box-shadow: 0 12px 25px rgba(59, 130, 246, 0.3); }
+        .brand-card img { max-height: 45px; width: auto; max-width: 100%; object-fit: contain; }
+        .brand-card span { font-weight: 800; font-size: 1.1rem; letter-spacing: -0.5px; color: #0f172a; }
+
+        /* Lightbox Modal Styles */
+        .lightbox-modal { display: none; position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(11, 15, 25, 0.92); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s ease; }
+        .lightbox-modal.active { display: flex; opacity: 1; }
+        .lightbox-content { max-width: 90%; max-height: 85vh; border-radius: 12px; border: 1px solid #1e293b; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7); object-fit: contain; transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .lightbox-modal.active .lightbox-content { transform: scale(1); }
+        .lightbox-close { position: absolute; top: 25px; right: 35px; color: #f8fafc; font-size: 2.5rem; font-weight: bold; cursor: pointer; transition: color 0.3s ease; background: rgba(0,0,0,0.5); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid #1e293b; }
+        .lightbox-close:hover { color: #3b82f6; }
+
+        footer { background-color: #070913; border-top: 1px solid #1e293b; text-align: center; padding: 3rem 5%; color: #94a3b8; font-size: 0.9rem; }
+        footer span { color: #f8fafc; font-weight: 500; }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+            header { padding: 1rem 5% !important; }
+            nav { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(11, 15, 25, 0.98); backdrop-filter: blur(16px); border-bottom: 1px solid #1e293b; padding: 1.5rem 0; gap: 1.25rem; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+            nav.active { display: flex; }
+            nav a { font-size: 1.1rem !important; }
+            .page-hero { padding-top: 8rem !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="logo">
+            <img src="logo.jpg" alt="Audio Video Solutions Logo">
+        </a>
+
+        <button class="menu-toggle" id="mobile-menu" onclick="toggleMenu()" aria-label="Toggle Navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav id="nav-menu">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="products.html" class="active">Products</a>
+            <a href="clients.html">Clients</a>
+            <a href="projects.html">Projects</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+    </header>
+
+    <!-- Page Hero -->
+    <div class="page-hero">
+        <h1>Professional Hardware & <span>System Catalog</span></h1>
+        <p>Explore our complete enterprise-grade audio, video, cabling, connectivity, and mounting solutions.</p>
+    </div>
+
+    <!-- Controls: Search & Category Filter Tabs -->
+    <div class="controls-section">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search by product name or keyword..." onkeyup="filterProducts()">
+        </div>
+        <div class="filter-tabs">
+            <button class="filter-btn active" onclick="filterCategory('all', this)">All Products</button>
+            <button class="filter-btn" onclick="filterCategory('cables', this)">Cables & Assemblies</button>
+            <button class="filter-btn" onclick="filterCategory('connectors', this)">Connectors & Plates</button>
+            <button class="filter-btn" onclick="filterCategory('mounts', this)">Mounts & Racks</button>
+            <button class="filter-btn" onclick="filterCategory('av-equipment', this)">AV Equipment & Systems</button>
+        </div>
+    </div>
+
+    <!-- Products Grid -->
+    <section class="products-section">
+        <div class="products-container" id="productGrid">
+
+            <!-- ================= CABLES & ASSEMBLIES ================= -->
+            <div class="product-card" data-category="cables" data-name="Audio Cable Assemblies">
+                <span class="product-badge">n-1 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image1.png')"><img src="extracted_media/image1.png" alt="Audio Cable Assemblies"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Audio Cable Assemblies</h3>
+                        <p class="product-desc">Pre-terminated professional audio cabling engineered for zero signal loss and high fidelity.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Audio%20Cable%20Assemblies" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="Analog Video Cable Assemblies">
+                <span class="product-badge">n-2 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image2.png')"><img src="extracted_media/image2.png" alt="Analog Video Cable Assemblies"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Analog Video Cable Assemblies</h3>
+                        <p class="product-desc">High-grade shielded analog video interconnects for specialized legacy and studio video gear.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Analog%20Video%20Cable%20Assemblies" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="VGA Cable Assemblies">
+                <span class="product-badge">n-3 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image3.png')"><img src="extracted_media/image3.png" alt="VGA Cable Assemblies"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">VGA Cable Assemblies</h3>
+                        <p class="product-desc">Heavy-duty double-shielded VGA monitor cables with ferrite cores for clear presentation setups.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20VGA%20Cable%20Assemblies" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="HDMI Cable Assemblies">
+                <span class="product-badge">n-4 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image4.png')"><img src="extracted_media/image4.png" alt="HDMI Cable Assemblies"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">HDMI Cable Assemblies</h3>
+                        <p class="product-desc">Ultra high-speed 4K/8K gold-plated HDMI interconnects supporting high refresh rates.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20HDMI%20Cable%20Assemblies" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="HDMI - DVI - VGA Assemblies">
+                <span class="product-badge">n-5 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image5.png')"><img src="extracted_media/image5.png" alt="HDMI - DVI - VGA Assemblies"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">HDMI - DVI - VGA Assemblies</h3>
+                        <p class="product-desc">Multi-format conversion cable assemblies designed for flexible display connectivity.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20HDMI%20-%20DVI%20-%20VGA%20Assemblies" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="DVI Cable Assemblies">
+                <span class="product-badge">n-6 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image6.png')"><img src="extracted_media/image6.png" alt="DVI Cable Assemblies"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">DVI Cable Assemblies</h3>
+                        <p class="product-desc">High-resolution digital visual interface cables for professional workstations and displays.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20DVI%20Cable%20Assemblies" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="DP - Mini DP Cable Assemblies">
+                <span class="product-badge">n-7 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image7.png')"><img src="extracted_media/image7.png" alt="DP - Mini DP Cable Assemblies"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">DP - Mini DP Cable Assemblies</h3>
+                        <p class="product-desc">DisplayPort and Mini DisplayPort cables supporting pristine multi-display workstation setups.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20DP%20-%20Mini%20DP%20Cable%20Assemblies" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="3G SDI / 6G SDI / 12G SDI Cable Assemblies">
+                <span class="product-badge">n-8 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image8.png')"><img src="extracted_media/image8.png" alt="SDI Cable Assemblies"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">3G / 6G / 12G SDI Cable Assemblies</h3>
+                        <p class="product-desc">Broadcast-grade coaxial SDI cables built for ultra-reliable uncompressed video transmission.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20SDI%20Cable%20Assemblies" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="Network Cable Assemblies">
+                <span class="product-badge">n-9 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image9.png')"><img src="extracted_media/image9.png" alt="Network Cable Assemblies"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Network Cable Assemblies</h3>
+                        <p class="product-desc">Cat6 / Cat6A / Cat7 shielded patch cords designed for high-speed IP networks and HDBaseT.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Network%20Cable%20Assemblies" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="USB 1.1 / 2.0 / 3.0 Cable Assemblies">
+                <span class="product-badge">n-10 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image10.png')"><img src="extracted_media/image10.png" alt="USB Cable Assemblies"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">USB 1.1 / 2.0 / 3.0 Cable Assemblies</h3>
+                        <p class="product-desc">Fast-data transfer and device connection cables for peripherals, cameras, and hubs.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20USB%20Cable%20Assemblies" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="USB-C Cable Assemblies">
+                <span class="product-badge">n-11 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image11.png')"><img src="extracted_media/image11.png" alt="USB-C Cable Assemblies"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">USB-C Cable Assemblies</h3>
+                        <p class="product-desc">Full-featured USB-C cables supporting 4K video, high-speed data, and Power Delivery (PD).</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20USB-C%20Cable%20Assemblies" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="Control Cable Assemblies">
+                <span class="product-badge">n-12 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image12.png')"><img src="extracted_media/image12.png" alt="Control Cable Assemblies"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Control Cable Assemblies</h3>
+                        <p class="product-desc">RS-232, RS-485, and infrared control cables for automation and AV system integration.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Control%20Cable%20Assemblies" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="Fiber Cable Assemblies">
+                <span class="product-badge">n-13 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image13.png')"><img src="extracted_media/image13.png" alt="Fiber Cable Assemblies"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Fiber Optic Cable Assemblies</h3>
+                        <p class="product-desc">Single-mode and multi-mode fiber jumpers for ultra-long distance lossless optical signal routing.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Fiber%20Cable%20Assemblies" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="Power Cable Assemblies">
+                <span class="product-badge">n-14 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image14.png')"><img src="extracted_media/image14.png" alt="Power Cable Assemblies"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Power Cable Assemblies</h3>
+                        <p class="product-desc">Heavy-duty power cords and IEC jumper cables designed for commercial AV racks and displays.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Power%20Cable%20Assemblies" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="Audio Cables">
+                <span class="product-badge">n-16 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image16.png')"><img src="extracted_media/image16.png" alt="Audio Cables"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Audio Bulk Cables</h3>
+                        <p class="product-desc">Spooled multi-core and shielded speaker/microphone wire for custom professional installations.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Audio%20Cables" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="Control Cables">
+                <span class="product-badge">n-17 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image17.png')"><img src="extracted_media/image17.png" alt="Control Cables"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Control Bulk Cables</h3>
+                        <p class="product-desc">Multi-conductor twisted pair control wire for automation panels and lighting systems.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Control%20Cables" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="Network Cables">
+                <span class="product-badge">n-18 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image18.png')"><img src="extracted_media/image18.png" alt="Network Cables"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Network Bulk Cables (Cat6/Cat7)</h3>
+                        <p class="product-desc">High-performance bulk network cabling boxes for structured enterprise LAN and AV-over-IP wiring.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Network%20Cables" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="RF Cables">
+                <span class="product-badge">n-19 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image19.png')"><img src="extracted_media/image19.png" alt="RF Cables"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">RF Coaxial Cables</h3>
+                        <p class="product-desc">Low-loss radio frequency cables designed for wireless microphone antenna distribution.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20RF%20Cables" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="Power Cables">
+                <span class="product-badge">n-20 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image20.png')"><img src="extracted_media/image20.png" alt="Power Cables"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Commercial Power Cables</h3>
+                        <p class="product-desc">Robust electrical supply cabling for professional AV infrastructure and equipment racks.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Power%20Cables" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="cables" data-name="SDI Video Cables">
+                <span class="product-badge">n-21 • Cable</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image21.png')"><img src="extracted_media/image21.png" alt="SDI Video Cables"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">SDI Video Bulk Coaxial</h3>
+                        <p class="product-desc">Precision impedance coaxial cables for professional broadcast video routing and studio setups.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20SDI%20Video%20Cables" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+
+            <!-- ================= CONNECTORS & PLATES ================= -->
+            <div class="product-card" data-category="connectors" data-name="Adapter Ring">
+                <span class="product-badge">n-15 • Connector</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image15.png')"><img src="extracted_media/image15.png" alt="Adapter Ring"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Display Adapter Ring</h3>
+                        <p class="product-desc">Secure tethered adapter ring (HDMI to USB-C, Mini-DP, DisplayPort) for meeting room tables.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Adapter%20Ring" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="connectors" data-name="Video - USB Pigtail - Converters">
+                <span class="product-badge">n-22 • Connector</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image22.png')"><img src="extracted_media/image22.png" alt="Video USB Pigtail Converters"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Video & USB Pigtail Converters</h3>
+                        <p class="product-desc">Compact signal adapters and conversion pigtails for seamless peripheral connection.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Video%20USB%20Pigtail%20Converters" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="connectors" data-name="Audio Pigtail - Converters">
+                <span class="product-badge">n-23 • Connector</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image23.png')"><img src="extracted_media/image23.png" alt="Audio Pigtail Converters"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Audio Pigtail & Adapters</h3>
+                        <p class="product-desc">XLR, RCA, 3.5mm, and 1/4 inch audio adapters and balanced signal converters.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Audio%20Pigtail%20Converters" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="connectors" data-name="Power Converters">
+                <span class="product-badge">n-24 • Connector</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image24.png')"><img src="extracted_media/image24.png" alt="Power Converters"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Power Converters & Adapters</h3>
+                        <p class="product-desc">Voltage regulators, international plug adapters, and reliable power supply converters.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Power%20Converters" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="connectors" data-name="Audio Connectors">
+                <span class="product-badge">n-25 • Connector</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image25.png')"><img src="extracted_media/image25.png" alt="Audio Connectors"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Audio Connectors</h3>
+                        <p class="product-desc">Professional XLR, Speakon, RCA, and TRS plugs engineered for secure termination.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Audio%20Connectors" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="connectors" data-name="Power Connectors">
+                <span class="product-badge">n-26 • Connector</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image26.png')"><img src="extracted_media/image26.png" alt="Power Connectors"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Power Connectors</h3>
+                        <p class="product-desc">Industrial AC power plugs, IEC chassis inlets, and locking power connectors.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Power%20Connectors" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="connectors" data-name="Video Connectors">
+                <span class="product-badge">n-27 • Connector</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image27.png')"><img src="extracted_media/image27.png" alt="Video Connectors"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Video Connectors (BNC, HDMI, SDI)</h3>
+                        <p class="product-desc">High-precision video termination plugs for coaxial, HDMI, and DisplayPort cables.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Video%20Connectors" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="connectors" data-name="Data Connectors / Panels">
+                <span class="product-badge">n-28 • Connector</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image28.png')"><img src="extracted_media/image28.png" alt="Data Connectors Panels"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Data Connectors & Patch Panels</h3>
+                        <p class="product-desc">RJ45 Keystone jacks, USB feed-through modules, and patch panel connectivity modules.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Data%20Connectors%20Panels" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="connectors" data-name="Wall Plate / Floor Box / Table Top Box / Panel">
+                <span class="product-badge">n-44 • Connector</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image44.png')"><img src="extracted_media/image44.png" alt="Wall Plates and Floor Boxes"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Wall Plates, Floor & Table Boxes</h3>
+                        <p class="product-desc">Architectural connection boxes and custom faceplates for boardroom connectivity.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Wall%20Plates%20and%20Boxes" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+
+            <!-- ================= MOUNTS & RACKS ================= -->
+            <div class="product-card" data-category="mounts" data-name="Rack and Accessories">
+                <span class="product-badge">n-29 • Mount/Rack</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image29.png')"><img src="extracted_media/image29.png" alt="Rack and Accessories" class="contain-fit"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">AV Racks & Accessories</h3>
+                        <p class="product-desc">Server racks, equipment shelves, cooling fans, and blank panels for secure AV housing.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Rack%20and%20Accessories" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="mounts" data-name="Cable Organiser">
+                <span class="product-badge">n-30 • Mount/Rack</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image30.png')"><img src="extracted_media/image30.png" alt="Cable Organiser" class="contain-fit"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Cable Organizers & Management</h3>
+                        <p class="product-desc">Horizontal and vertical cable management fingers, raceways, and velcro tie solutions.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Cable%20Organiser" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="mounts" data-name="Monitor Mounts">
+                <span class="product-badge">n-31 • Mount/Rack</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image31.png')"><img src="extracted_media/image31.png" alt="Monitor Mounts" class="contain-fit"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Ergonomic Monitor Mounts</h3>
+                        <p class="product-desc">Single and dual articulating arm desk mounts for desktop displays and workstations.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Monitor%20Mounts" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="mounts" data-name="Camera Mounts">
+                <span class="product-badge">n-32 • Mount/Rack</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image32.png')"><img src="extracted_media/image32.png" alt="Camera Mounts" class="contain-fit"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">PTZ Camera Wall & Ceiling Brackets</h3>
+                        <p class="product-desc">Sturdy mounting shelves and brackets designed for PTZ and video conferencing cameras.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Camera%20Mounts" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="mounts" data-name="Projector Mounts">
+                <span class="product-badge">n-33 • Mount/Rack</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image33.png')"><img src="extracted_media/image33.png" alt="Projector Mounts" class="contain-fit"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Universal Projector Mounts</h3>
+                        <p class="product-desc">Adjustable ceiling and pole mounts for commercial projectors with precise alignment control.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Projector%20Mounts" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="mounts" data-name="Display Wall Mounts">
+                <span class="product-badge">n-34 • Mount/Rack</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image34.png')"><img src="extracted_media/image34.png" alt="Display Wall Mounts" class="contain-fit"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Flat & Tilting Display Wall Mounts</h3>
+                        <p class="product-desc">Heavy-duty commercial screen brackets for flat panel displays and digital signage.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Display%20Wall%20Mounts" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="mounts" data-name="Display Swivel Mount">
+                <span class="product-badge">n-35 • Mount/Rack</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image35.png')"><img src="extracted_media/image35.png" alt="Display Swivel Mount" class="contain-fit"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Display Swivel & Articulating Mounts</h3>
+                        <p class="product-desc">Flexible swing-out arm mounts allowing multi-angle viewing for meeting rooms.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Display%20Swivel%20Mount" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="mounts" data-name="Display Side Cover">
+                <span class="product-badge">n-36 • Mount/Rack</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image36.png')"><img src="extracted_media/image36.png" alt="Display Side Cover" class="contain-fit"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Display Side Covers & Trim Kits</h3>
+                        <p class="product-desc">Aesthetic cosmetic side covers and trim enclosures for professional screen installations.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Display%20Side%20Cover" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="mounts" data-name="Display Ceiling Mount">
+                <span class="product-badge">n-37 • Mount/Rack</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image37.png')"><img src="extracted_media/image37.png" alt="Display Ceiling Mount" class="contain-fit"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Ceiling Display Suspension Mounts</h3>
+                        <p class="product-desc">Secure column ceiling mounts for digital signage screens in open architectural spaces.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Display%20Ceiling%20Mount" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="mounts" data-name="Display Table Mount">
+                <span class="product-badge">n-38 • Mount/Rack</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image38.png')"><img src="extracted_media/image38.png" alt="Display Table Mount" class="contain-fit"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Tabletop Display Stand Mounts</h3>
+                        <p class="product-desc">Sturdy desktop stands and bases for commercial touch panels and monitors.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Display%20Table%20Mount" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="mounts" data-name="Display Floor Mount">
+                <span class="product-badge">n-39 • Mount/Rack</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image39.png')"><img src="extracted_media/image39.png" alt="Display Floor Mount" class="contain-fit"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Mobile Display Floor Trolleys & Carts</h3>
+                        <p class="product-desc">Heavy-duty motorized and static mobile carts for interactive displays and video conferencing.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Display%20Floor%20Mount" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="mounts" data-name="Video Wall / Push Pull Mount">
+                <span class="product-badge">n-40 • Mount/Rack</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image40.png')"><img src="extracted_media/image40.png" alt="Video Wall Push Pull Mount" class="contain-fit"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Video Wall Push-Pull Mounts</h3>
+                        <p class="product-desc">Micro-adjustable alignment brackets with push-pull access for seamless video wall matrices.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Video%20Wall%20Push%20Pull%20Mount" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="mounts" data-name="Speaker Mounts">
+                <span class="product-badge">n-41 • Mount/Rack</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image41.png')"><img src="extracted_media/image41.png" alt="Speaker Mounts" class="contain-fit"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Professional Speaker Mounts</h3>
+                        <p class="product-desc">Wall and ceiling brackets for commercial sound speakers with adjustable tilt and pan.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Speaker%20Mounts" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="mounts" data-name="Touch Panel / Tablet Mounts">
+                <span class="product-badge">n-42 • Mount/Rack</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image42.png')"><img src="extracted_media/image42.png" alt="Touch Panel Mounts" class="contain-fit"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Touch Panel & Tablet Wall Mounts</h3>
+                        <p class="product-desc">Secure locking enclosures and glass-wall mounts for room scheduling touch panels.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Touch%20Panel%20Mounts" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="mounts" data-name="CPU / Device Mount">
+                <span class="product-badge">n-43 • Mount/Rack</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image43.png')"><img src="extracted_media/image43.png" alt="CPU Device Mount" class="contain-fit"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">CPU & AV Device Under-Desk Mounts</h3>
+                        <p class="product-desc">Secure brackets for mini-PCs, decoders, and AV boxes mounted neatly behind displays.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20CPU%20Device%20Mount" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+
+            <!-- ================= AV EQUIPMENT & SYSTEMS ================= -->
+            <div class="product-card" data-category="av-equipment" data-name="Hub - Dock">
+                <span class="product-badge">n-45 • AV</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image45.png')"><img src="extracted_media/image45.png" alt="Hub Dock"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">USB Hub & Docking Stations</h3>
+                        <p class="product-desc">Multi-port USB-C and Thunderbolt docking stations for meeting room laptop connectivity.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Hub%20Dock" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="av-equipment" data-name="VC Camera">
+                <span class="product-badge">n-46 • AV</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image46.png')"><img src="extracted_media/image46.png" alt="VC Camera"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Enterprise VC Cameras</h3>
+                        <p class="product-desc">High-definition video conferencing cameras with wide-angle optics for huddle rooms.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20VC%20Camera" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="av-equipment" data-name="Speaker Phone">
+                <span class="product-badge">n-47 • AV</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image47.png')"><img src="extracted_media/image47.png" alt="Speaker Phone"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Conference Speakerphones</h3>
+                        <p class="product-desc">USB/Bluetooth conference speakerphones with 360-degree voice pickup and noise cancellation.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Speaker%20Phone" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="av-equipment" data-name="PTZ Camera Joystick">
+                <span class="product-badge">n-48 • AV</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image48.png')"><img src="extracted_media/image48.png" alt="PTZ Joystick"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">PTZ Camera Controller Joystick</h3>
+                        <p class="product-desc">IP and serial PTZ camera joystick controllers for live event and broadcast camera operation.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20PTZ%20Camera%20Joystick" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="av-equipment" data-name="Extenders">
+                <span class="product-badge">n-49 • AV</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image49.png')"><img src="extracted_media/image49.png" alt="Extenders"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">HDBaseT / HDMI Extenders</h3>
+                        <p class="product-desc">Zero-latency HDMI and USB extension over single Cat6 cable up to 100 meters.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Extenders" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="av-equipment" data-name="Grab / Stream / Record">
+                <span class="product-badge">n-50 • AV</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image50.png')"><img src="extracted_media/image50.png" alt="Grab Stream Record" class="contain-fit"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Streaming & Recording Encoders</h3>
+                        <p class="product-desc">Hardware video capture and live streaming appliances for lecture capture and corporate events.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Streaming%20Encoders" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="av-equipment" data-name="Switcher">
+                <span class="product-badge">n-51 • AV</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image51.png')"><img src="extracted_media/image51.png" alt="Switcher"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Presentation Switchers</h3>
+                        <p class="product-desc">Multi-format AV presentation switchers with scaling and audio de-embedding.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Presentation%20Switchers" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="av-equipment" data-name="Multi Input Switcher / Converter">
+                <span class="product-badge">n-52 • AV</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image52.png')"><img src="extracted_media/image52.png" alt="Multi Input Switcher Converter"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Multi-Input Switcher & Converters</h3>
+                        <p class="product-desc">Versatile multi-format video switchers with integrated format conversion capabilities.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Multi%20Input%20Switcher%20Converter" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="av-equipment" data-name="Splitter">
+                <span class="product-badge">n-53 • AV</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image53.png')"><img src="extracted_media/image53.png" alt="Splitter"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">HDMI / SDI Video Splitters</h3>
+                        <p class="product-desc">1-in multi-out distribution amplifiers for sending video signals to multiple displays simultaneously.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Video%20Splitters" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="av-equipment" data-name="Matrix">
+                <span class="product-badge">n-54 • AV</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image54.png')"><img src="extracted_media/image54.png" alt="Matrix"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Modular Matrix Switchers</h3>
+                        <p class="product-desc">Customizable input/output modular matrix routing systems for enterprise command centers.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Matrix%20Switchers" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="av-equipment" data-name="Audio">
+                <span class="product-badge">n-55 • AV</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image55.png')"><img src="extracted_media/image55.png" alt="Audio Amplifiers"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Commercial Audio Amplifiers</h3>
+                        <p class="product-desc">Multi-channel power amplifiers and sound reinforcement hardware for commercial venues.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Commercial%20Audio" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="av-equipment" data-name="Scalers / Converters">
+                <span class="product-badge">n-56 • AV</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image56.png')"><img src="extracted_media/image56.png" alt="Scalers Converters"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Video Scalers & Format Converters</h3>
+                        <p class="product-desc">Broadcast-quality video up/down/cross scalers for resolution matching and signal adaptation.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Video%20Scalers" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="av-equipment" data-name="Video Wall Processor">
+                <span class="product-badge">n-57 • AV</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image57.png')"><img src="extracted_media/image57.png" alt="Video Wall Processor"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Video Wall Processors & Controllers</h3>
+                        <p class="product-desc">Multi-screen video wall controllers supporting picture-in-picture, cropping, and flexible layouts.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Video%20Wall%20Processor" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="av-equipment" data-name="PIP / QUAD">
+                <span class="product-badge">n-58 • AV</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image58.png')"><img src="extracted_media/image58.png" alt="PIP QUAD Splitters"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">PIP & Quad Screen Processors</h3>
+                        <p class="product-desc">Real-time quad-view and picture-in-picture video processors for multi-source surveillance and monitoring.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20PIP%20QUAD%20Processors" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="av-equipment" data-name="NDI">
+                <span class="product-badge">n-59 • AV</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image59.png')"><img src="extracted_media/image59.png" alt="NDI Solutions"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">NDI Video-Over-IP Solutions</h3>
+                        <p class="product-desc">Network Device Interface encoders, decoders, and cameras for IP-based live video workflows.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20NDI%20Solutions" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="av-equipment" data-name="SDVOE">
+                <span class="product-badge">n-60 • AV</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image60.png')"><img src="extracted_media/image60.png" alt="SDVOE Systems"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">SDVoE 4K AV-over-IP Transmitters</h3>
+                        <p class="product-desc">Software Defined Video over Ethernet technology delivering uncompressed 4K video over 10G IP networks.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20SDVoE%20Systems" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="av-equipment" data-name="Telephone Booth / Pod">
+                <span class="product-badge">n-61 • AV</span>
+                <div class="product-img-wrapper" onclick="openLightbox('extracted_media/image31.png')"><img src="extracted_media/image31.png" alt="Telephone Booth Pod" class="contain-fit"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Acoustic Meeting Pods & Booths</h3>
+                        <p class="product-desc">Soundproof office telephone booths and huddle pods pre-integrated with power and AV connectivity.</p>
+                    </div>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=Inquiry%20Regarding%20Acoustic%20Meeting%20Pods" target="_blank" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <!-- No Results Message -->
+            <div class="no-results" id="noResults">
+                <h3>No matching products found</h3>
+                <p>Try searching for another keyword or selecting a different category.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Authorized Brands Section -->
+    <section class="brands-section">
+        <h2 class="brands-title">Authorized Brands We <span>Deal In</span></h2>
+        <div class="brands-grid">
+            <div class="brand-card"><img src="6565425646.png" alt="QSC"></div>
+            <div class="brand-card"><img src="1000108918.jpg" alt="Sennheiser"></div>
+            <div class="brand-card"><img src="1000108920.jpg" alt="Shure"></div>
+            <div class="brand-card"><img src="67546746747.png" alt="Xilica"></div>
+            <div class="brand-card"><img src="1000108923.png" alt="Logitech"></div>
+            <div class="brand-card"><img src="1000094948.png" alt="Kramer"></div>
+            <div class="brand-card"><img src="1000108938.png" alt="Samsung"></div>
+            <div class="brand-card"><img src="1000108939.png" alt="Jabra"></div>
+            <div class="brand-card"><img src="1000094939.png" alt="AVER"></div>
+            <div class="brand-card"><img src="1000094938.png" alt="LG"></div>
+            <div class="brand-card"><img src="1000108917.png" alt="Sennheiser"></div>
+            <div class="brand-card"><span>YAMAHA</span></div>
+            <div class="brand-card"><img src="1000094945.png" alt="Harman"></div>
+            <div class="brand-card"><img src="1000094941.png" alt="BenQ"></div>
+            <div class="brand-card"><img src="1000094944.png" alt="Cisco"></div>
+            <div class="brand-card"><span style="color: #0B5ED7;">PHILIPS</span></div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox-modal" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img" alt="Enlarged Product View">
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 <span>Audio Video Solutions</span>. All rights reserved. | Contact: <a href="mailto:sales@avsolutionsapac.in" style="color: #3b82f6; text-decoration: none;">sales@avsolutionsapac.in</a></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        function toggleMenu() {
+            const nav = document.getElementById('nav-menu');
+            nav.classList.toggle('active');
+        }
+
+        let currentCategory = 'all';
+
+        function filterCategory(category, btn) {
+            currentCategory = category;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            applyFilters();
+        }
+
+        function filterProducts() {
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.product-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                const name = card.getAttribute('data-name').toLowerCase();
+                const desc = card.querySelector('.product-desc').textContent.toLowerCase();
+
+                const matchesCategory = (currentCategory === 'all' || category === currentCategory);
+                const matchesSearch = (name.includes(query) || desc.includes(query));
+
+                if (matchesCategory && matchesSearch) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const noResults = document.getElementById('noResults');
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        }
+
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = imageSrc;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+        }
+    </script>
+</body>
+</html>
