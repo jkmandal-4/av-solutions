@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | Audio Video Solutions (AVS)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: #0b0f19; color: #f8fafc; line-height: 1.6; overflow-x: hidden; }
+        
+        /* Uniform Header Style */
+        header {
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #1e293b;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 5%;
+        }
+        .logo { font-size: 1.25rem; font-weight: 700; color: #f8fafc; text-decoration: none; display: flex; align-items: center; }
+        .logo img { height: 60px; width: auto; object-fit: contain; border-radius: 4px; }
+        nav { display: flex; gap: 2rem; }
+        nav a { color: #94a3b8; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.3s ease; }
+        nav a:hover, nav a.active { color: #3b82f6; }
+
+        /* Mobile Menu Toggle Button */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 22px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .menu-toggle span {
+            width: 100%;
+            height: 3px;
+            background-color: #f8fafc;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* Page Hero */
+        .page-hero { padding: 9rem 5% 2rem 5%; text-align: center; max-width: 950px; margin: 0 auto; animation: fadeInDown 0.8s ease-out; }
+        .page-hero h1 { font-size: 2.75rem; font-weight: 800; margin-bottom: 1rem; color: #ffffff; letter-spacing: -1px; }
+        .page-hero h1 span { color: #3b82f6; }
+        .page-hero p { color: #94a3b8; font-size: 1.1rem; margin-bottom: 2rem; }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Search & Filter Controls */
+        .controls-section { max-width: 1300px; margin: 0 auto 2.5rem auto; padding: 0 5%; display: flex; flex-direction: column; gap: 1.5rem; align-items: center; }
+        .search-bar { width: 100%; max-width: 550px; position: relative; }
+        .search-bar input {
+            width: 100%;
+            background: #131d31;
+            border: 1px solid #1e293b;
+            padding: 0.85rem 1.25rem 0.85rem 3rem;
+            border-radius: 50px;
+            color: #f8fafc;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .search-bar input:focus { border-color: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); }
+        .search-bar::before {
+            content: "🔍";
+            position: absolute;
+            left: 1.1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+        }
+
+        .filter-tabs { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+        .filter-btn {
+            background: #131d31;
+            border: 1px solid #1e293b;
+            color: #94a3b8;
+            padding: 0.6rem 1.25rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filter-btn:hover { background: #1e293b; color: #f8fafc; transform: translateY(-2px); }
+        .filter-btn.active { background: #3b82f6; color: #ffffff; border-color: #3b82f6; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); }
+
+        /* Main Categories Grid */
+        .products-section { padding: 0 5% 4rem 5%; }
+        .products-container { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.75rem; }
+        
+        .product-card {
+            background-color: #131d31;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.35s ease;
+            animation: fadeInUp 0.5s ease-out;
+            position: relative;
+            cursor: pointer;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: #3b82f6;
+            box-shadow: 0 16px 30px -10px rgba(59, 130, 246, 0.25);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(11, 15, 25, 0.88);
+            backdrop-filter: blur(6px);
+            color: #3b82f6;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #1e293b;
+            z-index: 2;
+        }
+        .item-count-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 9px;
+            border-radius: 6px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            z-index: 2;
+        }
+
+        .product-img-wrapper {
+            width: 100%;
+            height: 195px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 16px;
+            position: relative;
+        }
+        .product-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.4s ease;
+        }
+        .product-card:hover .product-img-wrapper img { transform: scale(1.06); }
+
+        .product-info { padding: 1.35rem; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+        .product-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; color: #f8fafc; }
+        .product-desc { font-size: 0.86rem; color: #94a3b8; margin-bottom: 1.15rem; }
+        
+        .view-cat-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.7rem 1rem;
+            background-color: #1e293b;
+            color: #60a5fa;
+            font-weight: 600;
+            font-size: 0.88rem;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+        .product-card:hover .view-cat-btn {
+            background-color: #3b82f6;
+            color: #ffffff;
+            border-color: #3b82f6;
+        }
+
+        /* ================= FLIPKART / AMAZON STYLE SUB-PAGE ================= */
+        #detail-view {
+            display: none;
+            padding: 7.5rem 5% 5rem 5%;
+            max-width: 1350px;
+            margin: 0 auto;
+            animation: fadeInUp 0.4s ease-out;
+        }
+        .subpage-topbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.75rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid #1e293b;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #131d31;
+            color: #60a5fa;
+            border: 1px solid #1e293b;
+            padding: 0.65rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        .back-btn:hover { background: #1e293b; border-color: #3b82f6; color: #ffffff; }
+
+        .subpage-title-box h1 { font-size: 1.85rem; font-weight: 800; color: #ffffff; }
+        .subpage-title-box p { font-size: 0.9rem; color: #94a3b8; }
+
+        .subpage-search {
+            width: 100%;
+            max-width: 340px;
+            background: #131d31;
+            border: 1px solid #1e293b;
+            padding: 0.65rem 1rem;
+            border-radius: 8px;
+            color: #f8fafc;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .subpage-search:focus { border-color: #3b82f6; }
+
+        /* Store Grid (Flipkart / Amazon Minimal Cards) */
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .sku-card {
+            background: #131d31;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s ease;
+        }
+        .sku-card:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+            box-shadow: 0 12px 24px -8px rgba(59, 130, 246, 0.25);
+        }
+        .sku-img-box {
+            width: 100%;
+            height: 190px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+            position: relative;
+            cursor: zoom-in;
+        }
+        .sku-img-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        .sku-card:hover .sku-img-box img { transform: scale(1.06); }
+
+        .sku-body {
+            padding: 1.15rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+        .sku-brand {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #60a5fa;
+            margin-bottom: 0.25rem;
+        }
+        .sku-title {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #f8fafc;
+            margin-bottom: 0.5rem;
+            line-height: 1.35;
+        }
+        .sku-meta {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            background: #0b0f19;
+            padding: 0.45rem 0.65rem;
+            border-radius: 6px;
+            border: 1px solid #1e293b;
+            margin-bottom: 0.65rem;
+        }
+        .sku-meta strong { color: #cbd5e1; }
+        .sku-variants {
+            font-size: 0.76rem;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+        .sku-enquire-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.68rem 1rem;
+            background-color: #3b82f6;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.88rem;
+            border-radius: 7px;
+            text-decoration: none;
+            transition: background 0.25s ease;
+        }
+        .sku-enquire-btn:hover { background-color: #2563eb; }
+
+        /* Text-Only Authorized Brands Section (No Images) */
+        .brands-section { max-width: 1300px; margin: 3rem auto 4rem auto; padding: 0 5%; text-align: center; }
+        .brands-title { font-size: 1.65rem; font-weight: 700; color: #f8fafc; margin-bottom: 1.75rem; letter-spacing: -0.5px; }
+        .brands-title span { color: #3b82f6; }
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        .brand-card {
+            background-color: #131d31;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
+            padding: 1.1rem 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .brand-card:hover {
+            transform: translateY(-4px);
+            border-color: #3b82f6;
+            background-color: #1e293b;
+        }
+        .brand-card span {
+            font-weight: 700;
+            font-size: 0.98rem;
+            letter-spacing: 0.5px;
+            color: #f8fafc;
+            text-transform: uppercase;
+        }
+
+        /* Lightbox Modal */
+        .lightbox-modal { display: none; position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(11, 15, 25, 0.92); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px; }
+        .lightbox-modal.active { display: flex; }
+        .lightbox-content { max-width: 90%; max-height: 85vh; background: #fff; padding: 15px; border-radius: 12px; object-fit: contain; }
+        .lightbox-close { position: absolute; top: 25px; right: 35px; color: #f8fafc; font-size: 2.2rem; font-weight: bold; cursor: pointer; background: rgba(0,0,0,0.6); width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid #334155; }
+
+        footer { background-color: #070913; border-top: 1px solid #1e293b; text-align: center; padding: 3rem 5%; color: #94a3b8; font-size: 0.9rem; }
+        footer span { color: #f8fafc; font-weight: 500; }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+            header { padding: 1rem 5% !important; }
+            nav { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(11, 15, 25, 0.98); border-bottom: 1px solid #1e293b; padding: 1.5rem 0; gap: 1.25rem; text-align: center; }
+            nav.active { display: flex; }
+            .page-hero h1 { font-size: 2rem; }
+            .store-grid { grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 1rem; }
+            .sku-img-box { height: 145px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="logo">
+            <img src="logo.jpg" alt="Audio Video Solutions Logo">
+        </a>
+        <button class="menu-toggle" id="mobile-menu" onclick="toggleMenu()" aria-label="Toggle Navigation">
+            <span></span><span></span><span></span>
+        </button>
+        <nav id="nav-menu">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="products.html" class="active">Products</a>
+            <a href="clients.html">Clients</a>
+            <a href="projects.html">Projects</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+    </header>
+
+    <!-- ================= VIEW 1: MAIN CATEGORY CATALOGUE ================= -->
+    <div id="catalog-view">
+        <div class="page-hero">
+            <h1>Professional Hardware & <span>System Catalogue</span></h1>
+            <p>Select any category below to browse individual product models, pictures, part numbers, and specifications.</p>
+        </div>
+
+        <div class="controls-section">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search category or product type (e.g. HDMI, PTZ, Matrix, Rack)..." onkeyup="applyFilters()">
+            </div>
+            <div class="filter-tabs">
+                <button class="filter-btn active" onclick="filterCategory('all', this)">All Categories (61)</button>
+                <button class="filter-btn" onclick="filterCategory('cables', this)">Cables & Assemblies</button>
+                <button class="filter-btn" onclick="filterCategory('connectors', this)">Connectors & Plates</button>
+                <button class="filter-btn" onclick="filterCategory('mounts', this)">Mounts & Racks</button>
+                <button class="filter-btn" onclick="filterCategory('av-equipment', this)">AV Equipment & Systems</button>
+            </div>
+        </div>
+
+        <section class="products-section">
+            <div class="products-container" id="categoryGrid"></div>
+        </section>
+
+        <!-- Text-Only Authorized Brands Section -->
+        <section class="brands-section">
+            <h2 class="brands-title">Authorized Brands We <span>Deal In</span></h2>
+            <div class="brands-grid" id="mainBrandsGrid"></div>
+        </section>
+    </div>
+
+    <!-- ================= VIEW 2: FLIPKART/AMAZON PRODUCT LISTING VIEW ================= -->
+    <div id="detail-view">
+        <div class="subpage-topbar">
+            <button class="back-btn" onclick="backToCatalog()">← Back to Categories</button>
+            <div class="subpage-title-box">
+                <h1 id="subpageTitle">Category Name</h1>
+                <p id="subpageSubtitle">Showing all available models and variations</p>
+            </div>
+            <input type="text" id="skuSearchInput" class="subpage-search" placeholder="Filter models or part numbers..." onkeyup="filterSkus()">
+        </div>
+
+        <!-- Flipkart/Amazon Minimal Product Grid -->
+        <div class="store-grid" id="skuGrid"></div>
+
+        <!-- Text-Only Brands Available -->
+        <section class="brands-section" style="margin-top: 2rem; padding: 0;">
+            <h2 class="brands-title" style="font-size: 1.35rem;">Authorized Brands Available</h2>
+            <div class="brands-grid" id="subpageBrandsGrid"></div>
+        </section>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox-modal" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img" alt="Product View">
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 <span>Audio Video Solutions</span>. All rights reserved. | Contact: <a href="mailto:sales@avsolutionsapac.in" style="color: #3b82f6; text-decoration: none;">sales@avsolutionsapac.in</a></p>
+    </footer>
+
+    <script>
+        // Authorized Brands (Text-Only — No Brand Images)
+        const AUTHORIZED_BRANDS = [
+            "NT (Navbyte)", "QSC", "Sennheiser", "Shure", "Xilica", "Logitech",
+            "Kramer", "Samsung", "Jabra", "AVer", "LG", "Yamaha",
+            "Harman", "BenQ", "Cisco", "Philips", "Extron", "Crestron", "Belden", "Neutrik"
+        ];
+
+        // Complete 61-Category & Product SKU Database from NT MSP PRICE LIST.xlsx
+        const CATALOG_DATA = [
+            {
+                code: "n-1", group: "cables", title: "Audio Cable Assemblies",
+                cover: "extracted_media/image13.png",
+                desc: "Pre-terminated 6.35mm, XLR, RCA, 3.5mm Stereo, and Toslink optical audio cables.",
+                items: [
+                    { name: "6.35mm Mono M to XLR F Audio Cable", model: "1AA01", brand: "NT Pro Audio", img: "extracted_media/image13.png", specs: "Lengths: 1M, 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M, Custom" },
+                    { name: "6.35mm Mono M to XLR M Audio Cable", model: "1AA02", brand: "NT Pro Audio", img: "extracted_media/image14.png", specs: "Lengths: 1M, 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M, Custom" },
+                    { name: "RCA M to XLR M Interconnect Cable", model: "1AA03", brand: "NT Pro Audio", img: "extracted_media/image16.png", specs: "Lengths: 1M, 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M" },
+                    { name: "RCA M to XLR F Interconnect Cable", model: "1AA04", brand: "NT Pro Audio", img: "extracted_media/image15.png", specs: "Lengths: 1M, 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M" },
+                    { name: "6.35mm Stereo M to XLR M Balanced Cable", model: "1AA05", brand: "NT Pro Audio", img: "extracted_media/image17.png", specs: "Lengths: 1M, 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M" },
+                    { name: "6.35mm Stereo M to XLR F Balanced Cable", model: "1AA06", brand: "NT Pro Audio", img: "extracted_media/image18.png", specs: "Lengths: 1M, 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M" },
+                    { name: "3.5mm Stereo M to XLR M Audio Cable", model: "1AA07", brand: "NT Pro Audio", img: "extracted_media/image19.png", specs: "Lengths: 1M, 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M" },
+                    { name: "3.5mm Stereo M to XLR F Audio Cable", model: "1AA08", brand: "NT Pro Audio", img: "extracted_media/image20.png", specs: "Lengths: 1M, 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M" },
+                    { name: "XLR Female to XLR Female Audio Cable", model: "1AA09", brand: "NT Pro Audio", img: "extracted_media/image21.png", specs: "Lengths: 1M to 30M" },
+                    { name: "XLR Male to XLR Male Audio Cable", model: "1AA10", brand: "NT Pro Audio", img: "extracted_media/image22.png", specs: "Lengths: 1M to 30M" },
+                    { name: "XLR Female to XLR Male Microphone Cable", model: "1AA11", brand: "NT Pro Audio", img: "extracted_media/image23.png", specs: "Lengths: 1M, 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M" },
+                    { name: "6.35mm Stereo M to 6.35mm Stereo M Cable", model: "1AB01", brand: "NT Pro Audio", img: "extracted_media/image24.png", specs: "Lengths: 1M to 30M" },
+                    { name: "3.5mm Stereo M to 6.35mm Stereo M Cable", model: "1AB02", brand: "NT Pro Audio", img: "extracted_media/image25.png", specs: "Lengths: 1M to 30M" },
+                    { name: "6.35mm Mono M to 6.35mm Mono M Instrument Cable", model: "1AB03", brand: "NT Pro Audio", img: "extracted_media/image26.png", specs: "Lengths: 1M to 30M" },
+                    { name: "6.35mm Mono M to RCA M Cable", model: "1AB04", brand: "NT Pro Audio", img: "extracted_media/image27.png", specs: "Lengths: 1M to 30M" },
+                    { name: "3.5mm Stereo M to Dual 6.35mm Mono M Y-Cable", model: "1AB05", brand: "NT Pro Audio", img: "extracted_media/image29.png", specs: "Lengths: 1.8M to 30M" },
+                    { name: "6.35mm Stereo M to 2 RCA M Y-Cable", model: "1AB06", brand: "NT Pro Audio", img: "extracted_media/image28.png", specs: "Lengths: 1M to 30M" },
+                    { name: "Single RCA M to RCA M Audio Cable", model: "1AC01", brand: "NT Pro Audio", img: "extracted_media/image30.png", specs: "Lengths: 1M to 30M" },
+                    { name: "Dual 2-RCA M to 2-RCA M Stereo Cable", model: "1AC02", brand: "NT Pro Audio", img: "extracted_media/image31.png", specs: "Lengths: 1M to 30M" },
+                    { name: "3.5mm Stereo M to 3.5mm Stereo M Aux Cable", model: "1AE01", brand: "NT Pro Audio", img: "extracted_media/image32.png", specs: "Lengths: 1M, 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M" },
+                    { name: "3.5mm Stereo M to 3.5mm Stereo F Extension Cable", model: "1AE02", brand: "NT Pro Audio", img: "extracted_media/image33.png", specs: "Lengths: 1M to 30M" },
+                    { name: "3.5mm Stereo M to 2x RCA M Audio Cable", model: "1AE03", brand: "NT Pro Audio", img: "extracted_media/image34.png", specs: "Lengths: 1M, 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M" },
+                    { name: "Dual 3.5mm Stereo M to 4-Pole 3.5mm M Splitter", model: "1AE04", brand: "NT Pro Audio", img: "extracted_media/image35.png", specs: "Lengths: 1M to 30M" },
+                    { name: "Toslink Optical M to Toslink M Digital Audio Cable", model: "1AF01", brand: "NT Pro Audio", img: "extracted_media/image36.png", specs: "Lengths: 1M, 1.8M, 3M, 5M, 10M, 15M" },
+                    { name: "Toslink M to Mini Optical Stereo M Cable", model: "1AF03", brand: "NT Pro Audio", img: "extracted_media/image37.png", specs: "Lengths: 1M, 1.8M, 3M, 5M, 10M" }
+                ]
+            },
+            {
+                code: "n-2", group: "cables", title: "Analog Video Cable Assemblies",
+                cover: "extracted_media/image38.png",
+                desc: "Shielded BNC, RCA composite, S-Video, and 3-RCA component analog video cables.",
+                items: [
+                    { name: "BNC Male to BNC Male Coaxial Video Cable", model: "1BA01", brand: "NT Video", img: "extracted_media/image38.png", specs: "2AX16/2FX02 | Lengths: 0.5M to 30M" },
+                    { name: "BNC Female to BNC Male Video Extension Cable", model: "1BA02", brand: "NT Video", img: "extracted_media/image39.png", specs: "2AX16/2FX02 | Lengths: 1M to 30M" },
+                    { name: "BNC Male to RCA Male Video Interconnect", model: "1BA03", brand: "NT Video", img: "extracted_media/image40.png", specs: "Lengths: 1M to 30M" },
+                    { name: "RCA Male to RCA Male Composite Video Cable", model: "1BA04", brand: "NT Video", img: "extracted_media/image30.png", specs: "Lengths: 1.8M to 30M" },
+                    { name: "S-Video Male to S-Video Male Cable", model: "1BA05", brand: "NT Video", img: "extracted_media/image41.png", specs: "Lengths: 1.8M, 3M, 5M, 10M, 15M, 20M" },
+                    { name: "3-RCA Male to 3-RCA Male Component/AV Cable", model: "1BA06", brand: "NT Video", img: "extracted_media/image42.png", specs: "Lengths: 1.8M, 3M, 5M, 10M, 15M, 20M" }
+                ]
+            },
+            {
+                code: "n-3", group: "cables", title: "VGA Cable Assemblies",
+                cover: "extracted_media/image46.png",
+                desc: "Double-shielded VGA monitor cables, VGA+Audio, VGA to 5-BNC, and VGA to 3-RCA assemblies.",
+                items: [
+                    { name: "VGA Male to 3-RCA Component Video Cable", model: "1BB08", brand: "NT Video", img: "extracted_media/image43.png", specs: "Lengths: 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M" },
+                    { name: "VGA Male to 5-BNC RGBHV Breakout Cable", model: "1BB09", brand: "NT Video", img: "extracted_media/image44.png", specs: "Lengths: 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M" },
+                    { name: "VGA Male to VGA Female Extension Cable", model: "1BB02", brand: "NT Video", img: "extracted_media/image45.png", specs: "Lengths: 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M" },
+                    { name: "VGA Male to VGA Male Standard Monitor Cable", model: "1BB01", brand: "NT Video", img: "extracted_media/image46.png", specs: "Lengths: 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M" },
+                    { name: "VGA Male to VGA Male Heavy Duty (All Pins Connected)", model: "1BB03", brand: "NT Video", img: "extracted_media/image47.png", specs: "All Pin Connected | Lengths: 1.8M to 30M" },
+                    { name: "VGA + 3.5mm Stereo Audio Male to Male Cable", model: "1BB04", brand: "NT Video", img: "extracted_media/image48.png", specs: "Integrated Audio | Lengths: 1.8M to 30M" },
+                    { name: "DVI-I (18+5) Male to VGA Male Cable", model: "1BB07", brand: "NT Video", img: "extracted_media/image49.png", specs: "Lengths: 1.8M, 3M, 5M, 10M, 15M" }
+                ]
+            },
+            {
+                code: "n-4", group: "cables", title: "HDMI Cable Assemblies",
+                cover: "extracted_media/image51.png",
+                desc: "Complete range of SE, Pro, Pearl, Panel Mount, 4K/8K Active Optical Fiber, Heavy Duty Tactical Fiber, Mini & Micro HDMI cables.",
+                items: [
+                    { name: "HDMI M to HDMI M — SE Series", model: "1BC01", brand: "NT Connectivity", img: "extracted_media/image50.png", specs: "Lengths: 1M, 1.8M, 3.0M, 5.0M, 10.0M, 15.0M, 20.0M | 1 Yr Warranty" },
+                    { name: "HDMI M to HDMI M — Pro Series (4K UHD)", model: "1BC02", brand: "NT Connectivity", img: "extracted_media/image51.png", specs: "Lengths: 0.3M, 0.5M, 1M, 1.8M, 3M, 5M, 7.5M, 10M, 12M, 15M, 20M, 25M, 30M" },
+                    { name: "HDMI M to HDMI M — Pearl Premium Series", model: "1BC03", brand: "NT Connectivity", img: "extracted_media/image52.png", specs: "Lengths: 0.3M, 0.5M, 1M, 1.8M, 3M, 5M, 7.5M, 10M, 12M, 15M, 20M" },
+                    { name: "HDMI Female Panel Mount to HDMI Male Cable", model: "1BC04", brand: "NT Connectivity", img: "extracted_media/image53.png", specs: "Lengths: 1M, 1.8M, 3M, 5M, 10M, 15M, 20M, 30M" },
+                    { name: "HDMI Female to HDMI Female Panel Mount Cable", model: "1BC05", brand: "NT Connectivity", img: "extracted_media/image54.png", specs: "Lengths: 0.5M, 1.8M, 3M, 5M, 10M, 15M, 20M, 30M" },
+                    { name: "HDMI M to HDMI M Active Optical Fiber 4K (AOC)", model: "1BC06", brand: "NT Fiber Series", img: "extracted_media/image55.png", specs: "Lengths: 10M, 15M, 20M, 25M, 30M, 40M, 50M, 75M, 100M, 125M, 150M, 175M, 200M" },
+                    { name: "HDMI M to HDMI M Fiber 4K / 8K — ECO (The Circus)", model: "ECO-CIRCUS", brand: "NT Fiber Series", img: "extracted_media/image55.png", specs: "4K & 8K Variants | Lengths: 10.0M, 15.0M, 20.0M" },
+                    { name: "HDMI M to HDMI M Heavy Duty Armored Fiber 4K", model: "1BC22", brand: "NT Heavy Duty", img: "extracted_media/image56.png", specs: "Lengths: 5M, 7.5M, 10M, 12.5M, 15M, 20M, 25M, 30M, 40M, 50M, 60M, 70M, 75M, 80M, 90M, 100M" },
+                    { name: "HDMI M to HDMI M Heavy Duty Armored Fiber 8K", model: "1BC23", brand: "NT Heavy Duty", img: "extracted_media/image57.png", specs: "Lengths: 5M, 7.5M, 10M, 15M, 20M, 25M, 30M, 40M, 50M, 60M, 70M, 75M, 80M, 90M, 100M" },
+                    { name: "HDMI M to HDMI M Ultra High Speed Copper 8K", model: "1BC21", brand: "NT Connectivity", img: "extracted_media/image58.png", specs: "HDMI 2.1 8K@60Hz | Lengths: 1.8M, 3.0M, 5.0M" },
+                    { name: "HDMI Male to Mini HDMI Male Cable", model: "1BC12", brand: "NT Connectivity", img: "extracted_media/image59.png", specs: "Lengths: 1M, 1.8M, 3.0M, 5.0M" },
+                    { name: "HDMI Male to Micro HDMI Male Cable", model: "1BC13", brand: "NT Connectivity", img: "extracted_media/image60.png", specs: "Lengths: 1.8M, 3.0M, 5.0M" }
+                ]
+            },
+            {
+                code: "n-5", group: "cables", title: "HDMI - DVI - VGA Assemblies",
+                cover: "extracted_media/image62.png",
+                desc: "Cross-format conversion cables connecting HDMI, DVI-D (24+1), Mini HDMI, and VGA.",
+                items: [
+                    { name: "HDMI Male to VGA Male Active Conversion Cable", model: "1BC24", brand: "NT Video", img: "extracted_media/image61.png", specs: "HDMI Source | Length: 1.8M" },
+                    { name: "DVI-D (24+1) Male to HDMI Male Cable", model: "1BC07", brand: "NT Video", img: "extracted_media/image62.png", specs: "Bidirectional | Lengths: 1.8M, 3M, 5M, 10M, 15M, 20M" },
+                    { name: "DVI-D (24+1) Female to HDMI Male Cable", model: "1BC08", brand: "NT Video", img: "extracted_media/image63.png", specs: "Lengths: 1.8M, 3M, 5M, 10M, 15M" },
+                    { name: "DVI-D (24+1) Male to Mini HDMI Male Cable", model: "1BC09", brand: "NT Video", img: "extracted_media/image64.png", specs: "Lengths: 0.3M, 1.8M, 3M, 5M" },
+                    { name: "HDMI Male to 5-RCA Component/Audio Cable", model: "1BC10", brand: "NT Video", img: "extracted_media/image65.png", specs: "Lengths: 1.8M, 3M, 5M" }
+                ]
+            },
+            {
+                code: "n-6", group: "cables", title: "DVI Cable Assemblies",
+                cover: "extracted_media/image66.png",
+                desc: "Dual-Link DVI-D (24+1) and DVI-I (24+5) digital visual interface cables.",
+                items: [
+                    { name: "DVI-D (24+1) Male to Male Dual Link Cable", model: "1BD01", brand: "NT Video", img: "extracted_media/image66.png", specs: "Lengths: 1.8M, 3M, 5M, 10M, 15M, 20M" },
+                    { name: "DVI-D (24+1) Male to Female Extension Cable", model: "1BD02", brand: "NT Video", img: "extracted_media/image67.png", specs: "Lengths: 1.8M, 3M, 5M, 10M, 15M" },
+                    { name: "DVI-I (24+5) Male to Male Dual Link Cable", model: "1BD03", brand: "NT Video", img: "extracted_media/image68.png", specs: "Analog + Digital | Lengths: 1.8M to 15M" },
+                    { name: "DVI-D Active Optical Fiber Cable", model: "1BD05", brand: "NT Fiber Series", img: "extracted_media/image70.png", specs: "Lengths: 10M, 15M, 20M, 30M, 50M" }
+                ]
+            },
+            {
+                code: "n-7", group: "cables", title: "DP - Mini DP Cable Assemblies",
+                cover: "extracted_media/image72.png",
+                desc: "DisplayPort 1.4 (4K/8K) and Mini DisplayPort to DP, HDMI, DVI, and VGA assemblies.",
+                items: [
+                    { name: "DisplayPort Male to DisplayPort Male 4K/8K Cable", model: "1BE01", brand: "NT Video", img: "extracted_media/image72.png", specs: "Lengths: 1.8M, 3M, 5M, 10M, 15M, 20M" },
+                    { name: "DisplayPort Male to DisplayPort Female Extension", model: "1BE02", brand: "NT Video", img: "extracted_media/image73.png", specs: "Lengths: 1.8M, 3M, 5M" },
+                    { name: "Mini DisplayPort M to DisplayPort M Cable", model: "1BE03", brand: "NT Video", img: "extracted_media/image74.png", specs: "Lengths: 1.8M, 3M, 5M, 10M" },
+                    { name: "DisplayPort M to DVI-D (24+1) M Cable", model: "1BD12", brand: "NT Video", img: "extracted_media/image77.png", specs: "DP Source | Lengths: 1.8M, 3.0M, 5.0M" },
+                    { name: "DisplayPort M to HDMI M Conversion Cable", model: "1BC14", brand: "NT Video", img: "extracted_media/image78.png", specs: "DP Source | Lengths: 1.8M, 3M, 5M, 10M, 15M" },
+                    { name: "Mini DisplayPort M to DVI-D (24+1) M Cable", model: "1BD13", brand: "NT Video", img: "extracted_media/image79.png", specs: "Mini DP Source | Lengths: 1.8M, 3M, 5M" },
+                    { name: "Mini DisplayPort M to HDMI M Cable", model: "1BC18", brand: "NT Video", img: "extracted_media/image80.png", specs: "Mini DP Source | Lengths: 0.3M, 1M, 1.8M, 3M, 5M" },
+                    { name: "Mini DisplayPort M to VGA M Cable", model: "1BB06", brand: "NT Video", img: "extracted_media/image81.png", specs: "Mini DP Source | Length: 1.8M" },
+                    { name: "DisplayPort M to VGA M Cable", model: "1BB05", brand: "NT Video", img: "extracted_media/image82.png", specs: "DP Source | Length: 1.8M" },
+                    { name: "HDMI M to DisplayPort M Active Cable", model: "1BC17", brand: "NT Video", img: "extracted_media/image83.png", specs: "HDMI Source | Length: 1.0M" }
+                ]
+            },
+            {
+                code: "n-8", group: "cables", title: "3G / 6G / 12G SDI Cable Assemblies",
+                cover: "extracted_media/image84.png",
+                desc: "Broadcast-grade BNC coaxial SDI patch and long-run cables for 3G, 6G, and 12G-SDI workflows.",
+                items: [
+                    { name: "3G-SDI BNC Male to BNC Male Coaxial Cable", model: "1BF01", brand: "NT Broadcast", img: "extracted_media/image84.png", specs: "75-Ohm Precision | Lengths: 0.5M to 100M" },
+                    { name: "6G-SDI Single Strand BNC Male to Male Assembly", model: "1BF02", brand: "NT Broadcast", img: "extracted_media/image86.png", specs: "4K Broadcast Grade | Lengths: 1M to 100M" },
+                    { name: "6G-SDI Super Flex Tactical BNC Assembly", model: "1BF03", brand: "NT Broadcast", img: "extracted_media/image88.png", specs: "Flexible Stage Grade | Lengths: 1M to 100M" },
+                    { name: "12G-SDI Silver Coated UHD Broadcast Assembly", model: "1BF05", brand: "NT Broadcast", img: "extracted_media/image90.png", specs: "True 4K60P 12G-SDI | Lengths: 1M to 80M" }
+                ]
+            },
+            {
+                code: "n-9", group: "cables", title: "Network Cable Assemblies",
+                cover: "extracted_media/image92.png",
+                desc: "Factory-terminated Cat6 and Cat6A UTP/STP patch cords for enterprise LAN and HDBaseT.",
+                items: [
+                    { name: "Cat6 UTP RJ45 M to M Patch Cord", model: "1BG01", brand: "NT Network", img: "extracted_media/image92.png", specs: "23/24 AWG | Lengths: 0.3M, 0.5M, 1M, 1.5M, 2M, 3M, 5M, 10M, 15M, 20M, 30M" },
+                    { name: "Cat6A Shielded STP RJ45 Patch Cord (10G)", model: "1BG02", brand: "NT Network", img: "extracted_media/image93.png", specs: "Shielded HDBaseT & 10G | Lengths: 1M to 50M" }
+                ]
+            },
+            {
+                code: "n-10", group: "cables", title: "USB 1.1 / 2.0 / 3.0 Cable Assemblies",
+                cover: "extracted_media/image94.png",
+                desc: "Standard and Active Optical/Repeater USB Type-A, Type-B, Mini-USB, and Micro-USB cables.",
+                items: [
+                    { name: "USB 2.0 Type-A Male to Type-A Male Cable", model: "1BH01", brand: "NT Connectivity", img: "extracted_media/image94.png", specs: "Lengths: 1M, 1.8M, 3M, 5M, 10M" },
+                    { name: "USB 2.0 Type-A Male to Type-A Female Extension", model: "1BH02", brand: "NT Connectivity", img: "extracted_media/image95.png", specs: "Standard & Active 5M / 10M / 15M / 20M / 30M" },
+                    { name: "USB 2.0 Type-A Male to Type-B Male Printer/Scanner Cable", model: "1BH03", brand: "NT Connectivity", img: "extracted_media/image96.png", specs: "Lengths: 1.8M, 3M, 5M, 10M, 15M" },
+                    { name: "USB 3.0 Type-A Male to Type-A Male SuperSpeed", model: "1BH17", brand: "NT Connectivity", img: "extracted_media/image102.png", specs: "5Gbps | Lengths: 1M, 1.8M, 3M, 5M" },
+                    { name: "USB 3.0 Type-A Male to Type-B Male Camera/Hub Cable", model: "1BH19", brand: "NT Connectivity", img: "extracted_media/image104.png", specs: "Lengths: 1.8M, 3M, 5M" },
+                    { name: "USB 3.0 Active Extension A-Male to A-Female (Copper/Fiber)", model: "1BH20", brand: "NT Active USB", img: "extracted_media/image106.png", specs: "With External Power | Lengths: 5M, 10M, 15M, 20M, 30M, 50M" }
+                ]
+            },
+            {
+                code: "n-11", group: "cables", title: "USB-C Cable Assemblies",
+                cover: "extracted_media/image110.png",
+                desc: "Full-featured USB-C to USB-C, USB-A, HDMI, DP, and Active Optical USB-C VC cables.",
+                items: [
+                    { name: "USB-C Male to USB-C Male Gen2 (10Gbps / 100W PD / 4K)", model: "1BJ01", brand: "NT USB-C Series", img: "extracted_media/image110.png", specs: "Full Featured | Lengths: 1M, 1.8M, 3M, 5M" },
+                    { name: "USB-C Active Optical Cable (AOC) for Video Conferencing", model: "1BJ05", brand: "NT Fiber Series", img: "extracted_media/image114.png", specs: "Lengths: 7.5M, 10M, 15M, 20M, 30M" },
+                    { name: "USB-C Male to USB 3.0 Type-A Male Cable", model: "1BJ08", brand: "NT USB-C Series", img: "extracted_media/image118.png", specs: "Lengths: 1M, 1.8M, 3M, 5M" },
+                    { name: "USB-C Male to HDMI Male 4K@60Hz Direct Cable", model: "1BJ12", brand: "NT USB-C Series", img: "extracted_media/image124.png", specs: "Lengths: 1.8M, 3M, 5M" },
+                    { name: "USB-C Male to DisplayPort Male 4K@60Hz Cable", model: "1BJ15", brand: "NT USB-C Series", img: "extracted_media/image128.png", specs: "Lengths: 1.8M, 3M" }
+                ]
+            },
+            {
+                code: "n-12", group: "cables", title: "Control Cable Assemblies",
+                cover: "extracted_media/image138.png",
+                desc: "Pre-terminated DB9 RS-232 serial and USB-to-RS232/RS485 automation cables.",
+                items: [
+                    { name: "DB9 Female to DB9 Male RS-232 Serial Cable", model: "1CA01", brand: "NT Control", img: "extracted_media/image138.png", specs: "Lengths: 1.8M, 3M, 5M, 10M, 15M" },
+                    { name: "USB 2.0 to RS-232 DB9 Serial Converter Cable", model: "1CA03", brand: "NT Control", img: "extracted_media/image139.png", specs: "FTDI/Prolific Chipset | Lengths: 1.8M, 3M, 5M" }
+                ]
+            },
+            {
+                code: "n-13", group: "cables", title: "Fiber Optic Cable Assemblies",
+                cover: "extracted_media/image140.png",
+                desc: "LC, SC, and ST Duplex Single-Mode (SM) and Multi-Mode (MM) optical patch cords and pigtails.",
+                items: [
+                    { name: "LC to LC Multi-Mode (MM) Duplex Fiber Patch Cord", model: "FIBER-LC-MM", brand: "NT Optical", img: "extracted_media/image140.png", specs: "Lengths: 3M, 5M, 10M, 15M, 20M, 25M, 300M" },
+                    { name: "LC to LC Single-Mode (SM) Duplex Fiber Patch Cord", model: "FIBER-LC-SM", brand: "NT Optical", img: "extracted_media/image140.png", specs: "Lengths: 1M, 3M, 10M, 30M" },
+                    { name: "SC to LC / SC to SC Single-Mode Duplex Patch Cord", model: "FIBER-SC-SM", brand: "NT Optical", img: "extracted_media/image140.png", specs: "Lengths: 1.5M, 3M, 10M | LC/SC SM Pigtails Available" }
+                ]
+            },
+            {
+                code: "n-14", group: "cables", title: "Power Cable Assemblies",
+                cover: "extracted_media/image141.png",
+                desc: "Indian 3-Pin (6A/16A) to IEC C13, C14, C15, C19, and UK/EU/US power cords for AV racks.",
+                items: [
+                    { name: "Power Cord 6A (0.75 Sqmm) Indian 3-Pin to IEC C13", model: "1EA01", brand: "NT Power", img: "extracted_media/image141.png", specs: "Lengths: 1.5M, 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M" },
+                    { name: "Power Cord 6A IEC C13 to C14 PDU Jumper Cable", model: "1EA13", brand: "NT Power", img: "extracted_media/image145.png", specs: "Lengths: 1M, 1.8M, 3.0M, 5.0M, Custom" },
+                    { name: "Power Cord 6A IEC C14 to C15 High-Temp Jumper", model: "1EA14", brand: "NT Power", img: "extracted_media/image146.png", specs: "Lengths: 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M" },
+                    { name: "Heavy Duty Power Cord 16A (1.0 Sqmm) 3-Pin to IEC C13", model: "1EB01", brand: "NT Power", img: "extracted_media/image512.png", specs: "Lengths: 1.8M, 3M, 5M, 10M, 15M, 20M, 25M, 30M" }
+                ]
+            },
+            {
+                code: "n-15", group: "connectors", title: "Display Adapter Ring (Easy Chain)",
+                cover: "extracted_media/image12.jpeg",
+                desc: "Tethered conference table HDMI adapter rings with USB-C, DisplayPort, Mini-DP, and security cable locks.",
+                items: [
+                    { name: "Easy Chain 3-in-1 (DP-HDMI + MDP-HDMI + USB-C to HDMI + Attacher)", model: "1BI01", brand: "NT Boardroom", img: "extracted_media/image12.jpeg", specs: "Complete Meeting Room Ring with HDMI Cable Attacher" },
+                    { name: "Easy Chain 5-in-1 Full Ring (MDP, USB-C, DP, Mini HDMI, Micro HDMI)", model: "1BI04", brand: "NT Boardroom", img: "extracted_media/image12.jpeg", specs: "All-in-One Boardroom Presentation Ring" },
+                    { name: "Easy Chain (MDP-HDMI + USB-C to HDMI + Attacher)", model: "1BI02", brand: "NT Boardroom", img: "extracted_media/image12.jpeg", specs: "Ideal for Modern MacBook & Type-C Laptops" },
+                    { name: "Easy Chain (DP-HDMI + Mini DP-HDMI + Attacher)", model: "1BI03", brand: "NT Boardroom", img: "extracted_media/image12.jpeg", specs: "Tethered Steel Security Ring" },
+                    { name: "Security Rope Lock Set for Cables & Adapters", model: "LOCK-SET", brand: "NT Boardroom", img: "extracted_media/image455.png", specs: "Anti-Theft Security Tether" },
+                    { name: "Tabletop Cable Holder Clamp", model: "10AX01", brand: "NT Boardroom", img: "extracted_media/image454.png", specs: "Neat Cable Retention Clip" }
+                ]
+            },
+            {
+                code: "n-16", group: "cables", title: "Audio Bulk Cables",
+                cover: "extracted_media/image147.png",
+                desc: "Spooled microphone cables, 4-to-48 pair snake cables, and professional speaker cables.",
+                items: [
+                    { name: "Microphone Cable 22 AWG / 24 AWG Shielded", model: "2BB01 / 2BB02", brand: "NT Pro Audio", img: "extracted_media/image148.png", specs: "High-Flex Copper Shielded Mic Roll" },
+                    { name: "Microphone Cable Slim & Eco Series", model: "2BB03 / 2BB04", brand: "NT Pro Audio", img: "extracted_media/image150.png", specs: "Compact Installation Audio Wire" },
+                    { name: "Multi-Core Audio Snake Cable (4, 8, 12, 16, 24, 32, 48 Pair)", model: "2BA01 - 2BA07", brand: "NT Pro Audio", img: "extracted_media/image147.png", specs: "Individually Shielded Pairs for Stage & Studio" },
+                    { name: "Speaker Cable Flat/Parallel (14, 16, 18, 20 AWG)", model: "2BC01 - 2BC04", brand: "NT Pro Audio", img: "extracted_media/image156.png", specs: "Oxygen-Free Copper Speaker Wire" },
+                    { name: "Speaker Cable Round Jacketed (1.0, 1.5, 2.0, 2.5, 4.0 Sqmm)", model: "2BC08 - 2BC12", brand: "NT Pro Audio", img: "extracted_media/image159.png", specs: "Commercial PA & Line Array Speaker Cable" }
+                ]
+            },
+            {
+                code: "n-17", group: "cables", title: "Control Bulk Cables",
+                cover: "extracted_media/image17.png",
+                desc: "DMX 512 lighting cables, RS-485 twisted pair, and multi-core shielded/unshielded automation cables.",
+                items: [
+                    { name: "DMX 512 Control Cable (1 Pair & 2 Pair 22 AWG)", model: "2CA01 / 2CA02", brand: "NT Control", img: "extracted_media/image17.png", specs: "True 110-Ohm Impedance for Stage & Architectural Lighting" },
+                    { name: "RS-485 Industrial Control Cable (4 Pair 24 AWG)", model: "2CA03", brand: "NT Control", img: "extracted_media/image17.png", specs: "Low-Capacitance Automation & BMS Cable" },
+                    { name: "Multi-Core Shielded Control Cable (2C to 9C)", model: "2CA04 - 2CA09", brand: "NT Control", img: "extracted_media/image17.png", specs: "0.20 Sqmm, 0.25 Sqmm, 0.50 Sqmm, 26 AWG" },
+                    { name: "Multi-Core Unshielded Control Cable (2C, 6+1C, 20C)", model: "2CB01 - 2CB04", brand: "NT Control", img: "extracted_media/image17.png", specs: "0.14 Sqmm to 1.50 Sqmm" }
+                ]
+            },
+            {
+                code: "n-18", group: "cables", title: "Network Bulk Cables (Cat6 / Cat6A)",
+                cover: "extracted_media/image237.png",
+                desc: "23 AWG UTP, Shielded F/UTP, Outdoor PE, Armored, and Multi-Strand Cat6/Cat6A bulk drums.",
+                items: [
+                    { name: "Cat6A UTP 23 AWG High-Speed Network Cable", model: "2GX09", brand: "NT Network", img: "extracted_media/image237.png", specs: "10-Gigabit Certified Structured Cabling" },
+                    { name: "Cat6A Shielded 23 AWG (Individually Foiled Pairs)", model: "2GX12", brand: "NT Network", img: "extracted_media/image238.png", specs: "Ideal for HDBaseT, SDVoE & AV-over-IP" },
+                    { name: "Cat6 UTP 23 AWG Solid / Multi-Strand Cable", model: "2GX03 / 2GX04", brand: "NT Network", img: "extracted_media/image236.png", specs: "305M Roll | Pure Copper" },
+                    { name: "Cat6 Armored Heavy-Duty Underground Cable", model: "2GX03 AR", brand: "NT Network", img: "extracted_media/image239.png", specs: "Rodent-Proof Metallic Armory" },
+                    { name: "Cat6 Outdoor PE Weatherproof 23 AWG Cable", model: "2GX05-PE", brand: "NT Network", img: "extracted_media/image235.png", specs: "UV-Resistant Outdoor Jacket" },
+                    { name: "Cat6 Shielded STP 23 AWG (Solid & Multi-Strand)", model: "2GX06 / 2GX06 Ms", brand: "NT Network", img: "extracted_media/image234.png", specs: "EMI/RFI Protected Cabling" }
+                ]
+            },
+            {
+                code: "n-19", group: "cables", title: "RF Coaxial Cables",
+                cover: "extracted_media/image241.png",
+                desc: "Low-loss RF coaxial cables (195, 200, 240, 300, 400, 600 Series & RG58/RG142/RG174/RG213/RG316).",
+                items: [
+                    { name: "Low-Loss RF Coaxial Cable (195 / 200 / 240 / 300 / 400 / 600 Series)", model: "2FX03 - 2FX08", brand: "NT RF Series", img: "extracted_media/image241.png", specs: "Wireless Microphone & Antenna Distribution" },
+                    { name: "Standard RG Coaxial Series (RG58, RG142, RG174, RG213, RG316)", model: "2FX01 - 2FX11", brand: "NT RF Series", img: "extracted_media/image241.png", specs: "50-Ohm RF Signal Transmission" }
+                ]
+            },
+            {
+                code: "n-20", group: "cables", title: "Commercial Power Bulk Cables",
+                cover: "extracted_media/image242.png",
+                desc: "2-Core and 3-Core flexible copper power cables (0.5 Sqmm to 1.5 Sqmm).",
+                items: [
+                    { name: "2-Core Flexible Power Cable (0.5, 0.75, 1.0 Sqmm)", model: "2DX01 - 2DX03", brand: "NT Power", img: "extracted_media/image242.png", specs: "IS-Certified PVC Insulated Copper" },
+                    { name: "3-Core Commercial Power Cable (0.5, 0.75, 1.0, 1.5 Sqmm)", model: "2DX04 - 2DX07", brand: "NT Power", img: "extracted_media/image242.png", specs: "Heavy-Duty Equipment Power Cabling" }
+                ]
+            },
+            {
+                code: "n-21", group: "cables", title: "SDI Video Bulk Coaxial",
+                cover: "extracted_media/image164.png",
+                desc: "3G-SDI Snake (5 & 8 Coax), 6G-SDI RG59/RG6 Single/Super-Flex, and 12G-SDI Silver Coated bulk cables.",
+                items: [
+                    { name: "3G-SDI Multichannel Snake Coax (5-Coax & 8-Coax)", model: "2AX01 / 2AX02", brand: "NT Broadcast", img: "extracted_media/image164.png", specs: "Multi-Camera Broadcast Trunk Cable" },
+                    { name: "6G-SDI RG59 / RG6 Single Strand & Super-Flex Coax", model: "2AX10 - 2AX15", brand: "NT Broadcast", img: "extracted_media/image166.png", specs: "Low-Attenuation Studio Coax" },
+                    { name: "12G-SDI RG6 Silver Coated Single Strand Coax", model: "2AC02C", brand: "NT Broadcast", img: "extracted_media/image167.png", specs: "UHD 4K60P Broadcast Transmission" }
+                ]
+            },
+            {
+                code: "n-22", group: "connectors", title: "HDMI - DP - DVI - USB Pigtail Converters",
+                cover: "extracted_media/image169.png",
+                desc: "250mm conversion pigtails, panel-mount adapters, keystone couplers, and USB-C/HDMI/DP/VGA adapters.",
+                items: [
+                    { name: "HDMI F to HDMI F Panel Mount Adapter & 250mm Pigtail", model: "3AX01 / 3AX02", brand: "NT Adapters", img: "extracted_media/image169.png", specs: "Bidirectional | Panel & Wall Plate Mountable" },
+                    { name: "HDMI F to HDMI F XLR-Shell Panel Mount Pigtail", model: "3AX03", brand: "NT Adapters", img: "extracted_media/image171.png", specs: "Fits Standard D-Series XLR Cutouts" },
+                    { name: "HDMI F to Mini HDMI / Micro HDMI Pigtails & Adapters", model: "3AX06 - 3AX10", brand: "NT Adapters", img: "extracted_media/image174.png", specs: "Bidirectional 250mm Pigtails" },
+                    { name: "HDMI / Mini-HDMI / Micro-HDMI to VGA Female Pigtails", model: "3AX11 - 3AX14", brand: "NT Adapters", img: "extracted_media/image179.png", specs: "Active Digital-to-Analog Video Conversion" },
+                    { name: "DVI to HDMI Bidirectional Pigtails & Adapters", model: "3AX15 - 3AX18", brand: "NT Adapters", img: "extracted_media/image182.png", specs: "Gold-Plated Connectors" },
+                    { name: "HDMI Male to DisplayPort Female 250mm Pigtail", model: "3AX20", brand: "NT Adapters", img: "extracted_media/image187.png", specs: "Source HDMI to DP Display" }
+                ]
+            },
+            {
+                code: "n-23", group: "connectors", title: "Audio Pigtail & Adapters",
+                cover: "extracted_media/image263.png",
+                desc: "XLR, 6.35mm TRS, RCA, and 3.5mm audio conversion pigtails, Y-splitters, and impedance adapters.",
+                items: [
+                    { name: "XLR Male / Female to 6.35mm & RCA Audio Pigtails", model: "3BX01 - 3BX12", brand: "NT Pro Audio", img: "extracted_media/image263.png", specs: "Balanced & Unbalanced Conversion" },
+                    { name: "3.5mm Stereo to Dual RCA / 6.35mm Y-Splitter Pigtails", model: "3BX13 - 3BX24", brand: "NT Pro Audio", img: "extracted_media/image270.png", specs: "Shielded Studio Grade" }
+                ]
+            },
+            {
+                code: "n-24", group: "connectors", title: "Power Converters & Adapters",
+                cover: "extracted_media/image282.png",
+                desc: "IEC C13/C14/C19/C20 power plug adapters and universal international socket converters.",
+                items: [
+                    { name: "IEC C14 to C13 / C15 / C19 / Indian 3-Pin Power Adapters", model: "3CX01 - 3CX07", brand: "NT Power", img: "extracted_media/image282.png", specs: "Heavy-Duty Molded PDU Adapters" }
+                ]
+            },
+            {
+                code: "n-25", group: "connectors", title: "Audio Connectors (XLR, TRS, RCA, Speakon)",
+                cover: "extracted_media/image289.png",
+                desc: "Field-termination XLR plugs, chassis sockets, 6.35mm jacks, RCA plugs, and speaker Twist/Speakon connectors.",
+                items: [
+                    { name: "3-Pin & 5-Pin XLR Male / Female Cable & Panel Connectors", model: "4AX01 - 4AX20", brand: "NT / Neutrik", img: "extracted_media/image289.png", specs: "Heavy-Duty Metal Housing with Gold Contacts" },
+                    { name: "6.35mm Mono/Stereo TRS & 3.5mm Audio Plugs", model: "4AX21 - 4AX38", brand: "NT / Neutrik", img: "extracted_media/image305.png", specs: "Straight & Right-Angle Termination" },
+                    { name: "Speakon / Speaker Twist 4-Pole & RCA Plugs", model: "4AX39 - 4AX53", brand: "NT / Neutrik", img: "extracted_media/image318.png", specs: "High-Current Speaker Termination" }
+                ]
+            },
+            {
+                code: "n-26", group: "connectors", title: "Power Connectors",
+                cover: "extracted_media/image325.png",
+                desc: "Rewireable IEC C13/C14/C19 plugs, PowerCON locking connectors, and chassis power inlets.",
+                items: [
+                    { name: "Locking PowerCON Blue/Grey Cable & Chassis Connectors", model: "4BX01 - 4BX06", brand: "NT Power", img: "extracted_media/image325.png", specs: "20A Twist-Lock Stage & LED Wall Power" },
+                    { name: "Rewireable IEC C13, C14, C19 & Schuko Plugs", model: "4BX07 - 4BX14", brand: "NT Power", img: "extracted_media/image330.png", specs: "Commercial Grade Screw-Terminal" }
+                ]
+            },
+            {
+                code: "n-27", group: "connectors", title: "Video Connectors (BNC, HDMI, SDI)",
+                cover: "extracted_media/image338.png",
+                desc: "75-Ohm 3G/6G/12G-SDI BNC crimp/compression plugs, BNC barrel couplers, and field-termination HDMI plugs.",
+                items: [
+                    { name: "75-Ohm BNC Male Crimp & Compression Connectors (RG59/RG6)", model: "4CX01 - 4CX14", brand: "NT Broadcast", img: "extracted_media/image338.png", specs: "3G / 6G / 12G-SDI Rated" },
+                    { name: "BNC Female-to-Female Bulkhead & Barrel Couplers", model: "4CX15 - 4CX18", brand: "NT Broadcast", img: "extracted_media/image348.png", specs: "Precision Impedance Matched" },
+                    { name: "Field-Termination Solderless HDMI & DVI Plugs", model: "4CX19 - 4CX21", brand: "NT Connectivity", img: "extracted_media/image352.png", specs: "Custom Conduit Pulling Termination" }
+                ]
+            },
+            {
+                code: "n-28", group: "connectors", title: "Data Connectors & Patch Panels",
+                cover: "extracted_media/image356.png",
+                desc: "Cat6/Cat6A RJ45 plugs, toolless keystones, XLR-housing RJ45 EtherCON, fiber couplers, and 24-port patch panels.",
+                items: [
+                    { name: "Cat6 & Cat6A Shielded/Unshielded RJ45 Modular Plugs", model: "4DX01 - 4DX15", brand: "NT Network", img: "extracted_media/image356.png", specs: "Gold-Plated 8P8C Pass-Through & Standard" },
+                    { name: "RJ45 Keystone Jacks, 1:1 / 1:2 Couplers & Panel Mounts", model: "4DX16 - 4DX42", brand: "NT Network", img: "extracted_media/image375.png", specs: "Cat6 SH Panel Mount Couplers" },
+                    { name: "RJ45 EtherCON Plug in Rugged XLR Housing", model: "4DX45", brand: "NT Network", img: "extracted_media/image395.png", specs: "Locking Tactical Ethernet Connector" },
+                    { name: "LC Duplex & SC Simplex Fiber Optic Adapters", model: "4DX43 / 4DX44", brand: "NT Optical", img: "extracted_media/image393.png", specs: "Ceramic Sleeve Alignment" }
+                ]
+            },
+            {
+                code: "n-29", group: "mounts", title: "Networking & AV Racks and Accessories",
+                cover: "extracted_media/image398.png",
+                desc: "Floor-standing & wall-mount 19-inch racks (4U to 42U), cantilever shelves, drawers, lacing bars, fans, and cage nuts.",
+                items: [
+                    { name: "19-Inch Wall Mount & Floor Standing AV/Server Racks (4U - 42U)", model: "5AX01 - 5AX35", brand: "NT Racks", img: "extracted_media/image398.png", specs: "600x600 / 600x800 / 800x800mm Powder-Coated Steel" },
+                    { name: "1U / 2U Vented Cantilever & Fixed Rack Shelves", model: "5AX50 - 5AX56", brand: "NT Racks", img: "extracted_media/image412.png", specs: "Depths: 250mm, 450mm, 600mm" },
+                    { name: "2U Lockable Rack Drawer & Horizontal Lacing Bars", model: "5AX41 / 5AX59", brand: "NT Racks", img: "extracted_media/image415.png", specs: "Heavy-Duty Ball-Bearing Slides" },
+                    { name: "1U Rack Mount LED Light / Gooseneck Light & Cooling Fans", model: "5AX60 - 5AX63", brand: "NT Racks", img: "extracted_media/image418.png", specs: "Includes Rack Cage Nuts & Screws Packs" }
+                ]
+            },
+            {
+                code: "n-30", group: "mounts", title: "Cable Organizers & Management",
+                cover: "extracted_media/image420.png",
+                desc: "Velcro rolls, black/white spiral cable wraps, expandable braided sleeves, and marking nylon cable ties.",
+                items: [
+                    { name: "Hook & Loop Velcro Cable Roll (12mm x 25M)", model: "VELCRO-12", brand: "NT Management", img: "extracted_media/image420.png", specs: "Reusable Cut-to-Length Roll" },
+                    { name: "Spiral Cable Manager Roll (6mm, 12mm, 25mm — Black & White)", model: "SPIRAL-6/12/25", brand: "NT Management", img: "extracted_media/image421.png", specs: "25M & 50M Rolls" },
+                    { name: "Expandable Braided Sleeving (50mm & 76mm) & Marking Ties", model: "SLEEVE-50/76", brand: "NT Management", img: "extracted_media/image423.png", specs: "Includes 100mm - 250mm Nylon Cable Ties" }
+                ]
+            },
+            {
+                code: "n-31", group: "mounts", title: "Ergonomic Monitor Mounts",
+                cover: "extracted_media/image427.png",
+                desc: "Single, dual, triple, and quad desktop monitor arms with gas-spring height adjustment and VESA 75/100 plates.",
+                items: [
+                    { name: "Single Monitor Desk Clamp / Grommet Arm Mount", model: "7AX01 - 7AX08", brand: "NT Mounts", img: "extracted_media/image427.png", specs: "VESA 75x75 / 100x100 | 360° Rotation | Up to 15 Kg" },
+                    { name: "Dual Monitor Articulating & Gas-Spring Desk Arms", model: "7AX09 - 7AX18", brand: "NT Mounts", img: "extracted_media/image435.png", specs: "Side-by-Side Dual Screen Ergonomic Arms" },
+                    { name: "Triple & Quad Multi-Monitor Workstation Stand", model: "7AX21 - 7AX33", brand: "NT Mounts", img: "extracted_media/image445.png", specs: "Control Room & Trading Desk Multi-Monitor Mounts" }
+                ]
+            },
+            {
+                code: "n-32", group: "mounts", title: "PTZ & VC Camera Mounts",
+                cover: "extracted_media/image458.png",
+                desc: "Wall brackets, ceiling suspension poles, and above/below-display shelves for PTZ and VC cameras.",
+                items: [
+                    { name: "PTZ Camera Wall Mount Bracket (Standard & Heavy Duty)", model: "7BX01 - 7BX05", brand: "NT Mounts", img: "extracted_media/image458.png", specs: "Universal 1/4\"-20 Camera Screw & Cable Slot" },
+                    { name: "VC Camera Above/Below TV Mount & Ceiling Bracket", model: "7BX06 - 7BX10", brand: "NT Mounts", img: "extracted_media/image462.png", specs: "Compatible with Logitech, AVer, Cisco, Poly & NT PTZ" }
+                ]
+            },
+            {
+                code: "n-33", group: "mounts", title: "Universal Projector Mounts",
+                cover: "extracted_media/image465.png",
+                desc: "Flush ceiling kits, telescopic pole mounts (1ft to 5m), short-throw wall arms, and motorized scissor lifts.",
+                items: [
+                    { name: "Universal Ceiling Projector Mount (Flush & Telescopic Pole)", model: "7CX01 - 7CX20", brand: "NT Mounts", img: "extracted_media/image465.png", specs: "Lengths: 300mm to 5000mm | 15 Kg to 35 Kg Load" },
+                    { name: "Short-Throw & Ultra-Short-Throw Wall Arm Projector Mount", model: "7CX21 - 7CX28", brand: "NT Mounts", img: "extracted_media/image470.png", specs: "Telescopic Wall Extension Arm" },
+                    { name: "Motorized False-Ceiling Projector Scissor Lift", model: "7CX30 - 7CX39", brand: "NT Mounts", img: "extracted_media/image473.png", specs: "1M to 4M Drop with RF Remote Control" }
+                ]
+            },
+            {
+                code: "n-34", group: "mounts", title: "Flat & Tilting Display Wall Mounts",
+                cover: "extracted_media/image475.png",
+                desc: "Fixed and tilting commercial wall brackets for 32\" to 110\" LED displays and interactive flat panels.",
+                items: [
+                    { name: "Fixed Low-Profile Commercial Display Wall Mount (32\" - 100\")", model: "7DX01 - 7DX12", brand: "NT Mounts", img: "extracted_media/image475.png", specs: "VESA up to 800x600 | Heavy-Gauge Cold-Rolled Steel" },
+                    { name: "Tilting Commercial Display Wall Bracket (43\" - 110\" IFPD)", model: "7DX13 - 7DX24", brand: "NT Mounts", img: "extracted_media/image480.png", specs: "±15° Tilt | Up to 120 Kg Load for Interactive Panels" }
+                ]
+            },
+            {
+                code: "n-35", group: "mounts", title: "Display Swivel & Articulating Mounts",
+                cover: "extracted_media/image482.png",
+                desc: "Full-motion dual-arm swivel wall mounts for 32\" to 85\" commercial displays.",
+                items: [
+                    { name: "Full-Motion Dual-Arm Articulating Wall Mount (32\" - 85\")", model: "7EX01 - 7EX08", brand: "NT Mounts", img: "extracted_media/image482.png", specs: "Swivel, Tilt & Extend up to 600mm from Wall" }
+                ]
+            },
+            {
+                code: "n-36", group: "mounts", title: "Display Side Covers & Trim Kits",
+                cover: "extracted_media/image487.png",
+                desc: "Architectural side cover trim panels to conceal rear wall mount gaps on 55\" to 98\" displays.",
+                items: [
+                    { name: "Aesthetic Display Side Cover Kit (55\", 65\", 75\", 86\", 98\")", model: "7FX01 - 7FX14", brand: "NT Mounts", img: "extracted_media/image487.png", specs: "Perforated Matte Black Steel Concealment Trim" }
+                ]
+            },
+            {
+                code: "n-37", group: "mounts", title: "Display Ceiling Suspension Mounts",
+                cover: "extracted_media/image489.png",
+                desc: "Single-screen and back-to-back dual-screen ceiling pole suspension mounts.",
+                items: [
+                    { name: "Single & Back-to-Back Ceiling Display Mount (43\" - 86\")", model: "7GX01 - 7GX09", brand: "NT Mounts", img: "extracted_media/image489.png", specs: "1M to 3M Telescopic Drop Pole with Internal Cable Routing" }
+                ]
+            },
+            {
+                code: "n-38", group: "mounts", title: "Display Tabletop Stand Mounts",
+                cover: "extracted_media/image493.png",
+                desc: "Heavy-duty tabletop pedestals and angled desk stands for commercial monitors and confidence displays.",
+                items: [
+                    { name: "Universal Tabletop TV Pedestal & Confidence Monitor Stand", model: "7HX01 - 7HX06", brand: "NT Mounts", img: "extracted_media/image493.png", specs: "32\" to 75\" | Height Adjustable Base" }
+                ]
+            },
+            {
+                code: "n-39", group: "mounts", title: "Mobile Display Floor Trolleys & Carts",
+                cover: "extracted_media/image496.png",
+                desc: "Single/dual display mobile carts, motorized height-adjustable stands, and stage confidence monitor trolleys.",
+                items: [
+                    { name: "Heavy-Duty Mobile Display Trolley with AV Shelf & Camera Tray", model: "7IX01 - 7IX15", brand: "NT Mounts", img: "extracted_media/image496.png", specs: "55\" - 100\" Interactive Panel Ready | Lockable Caster Wheels" },
+                    { name: "Dual-Screen Video Conferencing Mobile Floor Cart", model: "7IX16 - 7IX22", brand: "NT Mounts", img: "extracted_media/image505.png", specs: "Side-by-Side Dual 55\" - 75\" Display Support" },
+                    { name: "Low-Profile Downview Stage Confidence Monitor Floor Stand", model: "7IX23 - 7IX27", brand: "NT Mounts", img: "extracted_media/image515.png", specs: "Adjustable Tilt Angle for Auditorium Stages" }
+                ]
+            },
+            {
+                code: "n-40", group: "mounts", title: "Video Wall Push-Pull Pop-Out Mounts",
+                cover: "extracted_media/image519.png",
+                desc: "8-point micro-adjustment push-pull pop-out brackets and floor-to-wall structures for 46\" to 65\" video walls.",
+                items: [
+                    { name: "Hydraulic Push-Pull Pop-Out Video Wall Mount (Landscape/Portrait)", model: "7JX01 - 7JX17", brand: "NT Mounts", img: "extracted_media/image519.png", specs: "6-Axis Micro-Alignment for Seamless 2x2 / 3x3 / 4x4 Walls" }
+                ]
+            },
+            {
+                code: "n-41", group: "mounts", title: "Professional Speaker Mounts",
+                cover: "extracted_media/image530.png",
+                desc: "Pan-tilt wall brackets, ceiling mounts, and tripod floor stands for commercial speakers and soundbars.",
+                items: [
+                    { name: "Heavy-Duty Pan & Tilt Wall Speaker Brackets & Soundbar Mounts", model: "7KX01 - 7KX12", brand: "NT Mounts", img: "extracted_media/image530.png", specs: "Supports 5 Kg to 40 Kg PA & Cinema Speakers" }
+                ]
+            },
+            {
+                code: "n-42", group: "mounts", title: "Touch Panel & Tablet Mounts",
+                cover: "extracted_media/image542.png",
+                desc: "Locking wall/glass/tabletop enclosures for iPad, Android tablets, and room scheduling panels.",
+                items: [
+                    { name: "Anti-Theft Tablet Wall, Glass & Tabletop Kiosk Enclosures", model: "7LX01 - 7LX16", brand: "NT Mounts", img: "extracted_media/image542.png", specs: "Fits 9.7\" to 12.9\" Tablets & Room Schedulers" }
+                ]
+            },
+            {
+                code: "n-43", group: "mounts", title: "CPU & AV Device Under-Desk Mounts",
+                cover: "extracted_media/image553.png",
+                desc: "Under-desk CPU holders and behind-display VESA mini-PC/extender mounting plates.",
+                items: [
+                    { name: "Swivel Under-Desk CPU Holder & Behind-TV Mini-PC Bracket", model: "7MX01 - 7MX07", brand: "NT Mounts", img: "extracted_media/image553.png", specs: "Adjustable Width & Strap/Clamp Mount" }
+                ]
+            },
+            {
+                code: "n-44", group: "connectors", title: "Wall Plates, Floor Boxes & Table Top Boxes",
+                cover: "extracted_media/image565.png",
+                desc: "Customizable brass/aluminum pop-up floor boxes, architectural wall faceplates, manual slide table cubbies, and 19\" XLR/BNC panels.",
+                items: [
+                    { name: "Customizable Pop-Up & Flush Brass/SS Floor Boxes", model: "9BX01 - 9BX06", brand: "NT Architectural", img: "extracted_media/image558.png", specs: "Modular Power + HDMI + RJ45 + USB + Audio" },
+                    { name: "Brushed Aluminum & White Architectural AV Wall Plates", model: "9AX01 - 9AX33", brand: "NT Architectural", img: "extracted_media/image565.png", specs: "HDMI, VGA, USB, XLR, RJ45 & Recessed Wall Plates" },
+                    { name: "Table Top Manual Slide-In Connectivity Box (2 Power + AV)", model: "9CX02", brand: "NT Architectural", img: "extracted_media/image578.png", specs: "Boardroom Table Flush Cubby" },
+                    { name: "19-Inch 1U 16-Port XLR & 16-Port BNC Rack Panels", model: "PANEL-16XLR / 16BNC", brand: "NT Racks", img: "extracted_media/image579.png", specs: "D-Series Punched 19\" Patch Panels" }
+                ]
+            },
+            {
+                code: "n-45", group: "av-equipment", title: "USB-C & USB 3.0 Hubs and Docking Stations",
+                cover: "extracted_media/image9.png",
+                desc: "Multi-display USB-C / DisplayLink triple-4K docks, 100W PD hubs, and powered industrial USB 3.0 hubs.",
+                items: [
+                    { name: "USB-C to HDMI + VGA Converter Hub (Single / Simultaneous / MST)", model: "12BX01 - 12BX03", brand: "NT Connectivity", img: "extracted_media/image581.png", specs: "Compact Meeting Room Laptop Adapter" },
+                    { name: "USB-C to Gigabit RJ45 + 3x USB 3.0 Hub", model: "12BX05", brand: "NT Connectivity", img: "extracted_media/image582.png", specs: "Plug & Play Ethernet + USB Expansion" },
+                    { name: "USB-C to 4-Port USB 3.0 SuperSpeed Hub", model: "12BX06", brand: "NT Connectivity", img: "extracted_media/image583.png", specs: "5Gbps Data Transfer" },
+                    { name: "USB-C 5-in-1 Dock (HDMI 4K + 1G LAN + USB 3.0 + 100W PD)", model: "12BX08", brand: "NT Connectivity", img: "extracted_media/image584.png", specs: "HDMI + 1G Ethernet + USB 3.0 + 100W PD Pass-Through" },
+                    { name: "USB-C 8-in-1 Dock (HDMI + VGA + 1G LAN + 2x USB 3.0 + SD + 100W PD)", model: "12BX09", brand: "NT Connectivity", img: "extracted_media/image585.png", specs: "Dual Display + Gigabit LAN + Card Reader + 100W PD" },
+                    { name: "USB-C to Dual 2x HDMI 4K@60Hz MST Adapter", model: "12BX10", brand: "NT Connectivity", img: "extracted_media/image587.png", specs: "Simultaneous Dual 4K@60Hz Displays" },
+                    { name: "USB-C to Dual 2x DisplayPort 4K@60Hz Adapter", model: "12BX11", brand: "NT Connectivity", img: "extracted_media/image586.png", specs: "Simultaneous Dual 4K@60Hz DP Displays" },
+                    { name: "USB-C / USB 3.0 Enterprise Dock (2x HDMI + 2x DP + 1G LAN + 6x USB)", model: "12BX15", brand: "NT Enterprise", img: "extracted_media/image11.png", specs: "DisplayLink Dual 4K + 20V Power + Audio + Lock Slot" },
+                    { name: "USB-C to 4-Port USB-C 10Gbps Hub with 100W PD", model: "12BX16", brand: "NT Enterprise", img: "extracted_media/image10.png", specs: "10Gbps Data | 1x 100W PD Port + 3x 1.5A Ports" },
+                    { name: "USB-C / USB 3.0 13-in-1 Triple 4K Display Docking Station", model: "12BX17", brand: "NT Enterprise", img: "extracted_media/image9.png", specs: "3x 4K Displays + 2.5G Ethernet + 4x USB 3.0 + USB-C 10Gbps" },
+                    { name: "USB 3.0 Universal Dock (DVI + HDMI + 1G LAN + 6x USB + Audio)", model: "12DX01 / 12DX02", brand: "NT Enterprise", img: "extracted_media/image588.png", specs: "DisplayLink Dual Display Workstation Dock" },
+                    { name: "Powered USB 3.0 Hub (4-Port, 7-Port & 10-Port Models)", model: "12DX04 / 07 / 08", brand: "NT Enterprise", img: "extracted_media/image590.png", specs: "Includes External Power Supply" }
+                ]
+            },
+            {
+                code: "n-46", group: "av-equipment", title: "Enterprise VC & PTZ Cameras",
+                cover: "extracted_media/image8.png",
+                desc: "10X and 20X Optical Zoom Full HD / 4K PTZ cameras with HDMI, 3G-SDI, IP Streaming, and USB 3.0/USB-C outputs.",
+                items: [
+                    { name: "PTZ Camera 20X Optical Zoom (HDMI + IP + 3G-SDI + USB 3.0)", model: "20AX01", brand: "NT / AVer / Logitech", img: "extracted_media/image8.png", specs: "Simultaneous 4-Output Broadcast & Conference PTZ" },
+                    { name: "PTZ Camera 10X Optical Zoom (USB 2.0 Plug-and-Play)", model: "20AX03", brand: "NT / AVer / Logitech", img: "extracted_media/image7.png", specs: "Ideal for Medium Conference & Huddle Rooms" },
+                    { name: "PTZ Camera 10X Optical Zoom (HDMI + USB-C)", model: "20AX10", brand: "NT / AVer / Logitech", img: "extracted_media/image7.png", specs: "Dual Output with RS-232/RS-485 Control" }
+                ]
+            },
+            {
+                code: "n-47", group: "av-equipment", title: "Conference Speakerphones & Array Mics",
+                cover: "extracted_media/image1.png",
+                desc: "360° DSP echo-cancelling USB/Bluetooth speakerphones and daisy-chainable ceiling/table array microphones.",
+                items: [
+                    { name: "Speakerphone Speak Series 01 (USB DSP Omnidirectional)", model: "20CA01", brand: "NT / Jabra / Sennheiser", img: "extracted_media/image2.png", specs: "3m 360° Pickup | AEC, ANS, AGC | 80dB Speaker" },
+                    { name: "Speakerphone Speak Series 02 (Bluetooth + Battery + Cascade)", model: "20CA02", brand: "NT / Jabra / Sennheiser", img: "extracted_media/image3.png", specs: "3m 360° | Built-in Battery | Cascadable" },
+                    { name: "Speakerphone Collaborate Series 01 (Large Room 4m 85dB)", model: "20CA03", brand: "NT / Jabra / Sennheiser", img: "extracted_media/image1.png", specs: "4m 360° | AEC <65dB | 100Hz-22kHz Full Band" },
+                    { name: "10-Element Array Microphone — Array Series 01", model: "20CA04", brand: "NT / Shure / Sennheiser", img: "extracted_media/image4.png", specs: "8m Voice Pickup | Daisy-Chainable | USB-C + AEC/ANS/AGC" },
+                    { name: "Digital Array Audio Mixer", model: "20CA05", brand: "NT / QSC / Xilica", img: "extracted_media/image5.png", specs: "Dedicated DSP Array Processing Mixer" },
+                    { name: "Multi-Mic Array Cascading Hub", model: "20CA06", brand: "NT Pro Audio", img: "extracted_media/image6.png", specs: "PoE & Audio Daisy-Chain Distribution Hub" }
+                ]
+            },
+            {
+                code: "n-48", group: "av-equipment", title: "PTZ Camera Controller Joystick",
+                cover: "extracted_media/image591.png",
+                desc: "IP (ONVIF/VISCA-over-IP) and serial RS-232/RS-422/RS-485 4D joystick camera controller.",
+                items: [
+                    { name: "Professional 4D PTZ Camera Joystick Controller (IP + Serial)", model: "20BX01", brand: "NT Broadcast", img: "extracted_media/image591.png", specs: "VISCA, Pelco-D/P, ONVIF & IP Control with LCD Screen" }
+                ]
+            },
+            {
+                code: "n-49", group: "av-equipment", title: "HDBaseT, Fiber, IP, USB & Audio Extenders",
+                cover: "extracted_media/image593.png",
+                desc: "Point-to-point Cat6, AV-over-IP, 10km/20km Fiber, Wireless HDMI/USB-C, USB 2.0/3.0, Audio, and RS-232 extenders.",
+                items: [
+                    { name: "HDMI Over IP Extender 100M (1-to-1 / 1-to-Many TX & RX)", model: "16BB01 - 16BB03", brand: "NT / Kramer", img: "extracted_media/image593.png", specs: "Works over Standard 1G Network Switch" },
+                    { name: "HDMI 4K Over IP Extender 100M with Loop, RS232, IR & ARC", model: "16BB05 / 16BB06", brand: "NT / Kramer", img: "extracted_media/image595.png", specs: "4K UHD One-to-One or One-to-Many" },
+                    { name: "HDMI Point-to-Point Cat6 Extenders (60M, 70M, 90M, 100M)", model: "16BD01 - 16BD05", brand: "NT / Kramer", img: "extracted_media/image597.png", specs: "4K PoC (Receiver Powered by Transmitter) + Loop Out + IR" },
+                    { name: "HDMI Over Fiber Optic Extender (10 KM 4K & 20 KM 1080p)", model: "16BE02 / 16BE03", brand: "NT Optical", img: "extracted_media/image600.png", specs: "Single-Mode LC Fiber Long-Haul Transmission" },
+                    { name: "DVI Cat6 Mini Extender (50M) & DVI Fiber Extender (2 KM)", model: "16BF02 / 16BG01", brand: "NT Video", img: "extracted_media/image601.png", specs: "Uncompressed Digital Video Extension" },
+                    { name: "HDMI DVB-T RF Modulator (One-to-Many Coax Distribution)", model: "16BJ01", brand: "NT Broadcast", img: "extracted_media/image603.png", specs: "1080p over Coax to Unlimited DVB-T Displays" },
+                    { name: "Wireless USB-C / HDMI Transmitter & Receiver Kit (20M 4K60)", model: "16BL01 / 16BL02", brand: "NT Wireless", img: "extracted_media/image606.png", specs: "Plug-and-Play Cable-Free Boardroom Presentation" },
+                    { name: "VGA Extender over Cat6 (300M) & Fiber (10 KM)", model: "16DX01 / 16DX03", brand: "NT Video", img: "extracted_media/image608.png", specs: "Long-Distance VGA + Audio Extension" },
+                    { name: "USB 3.0 1:4 Hub Fiber Optic Extender (100M)", model: "16EA01 / 16EA02", brand: "NT Connectivity", img: "extracted_media/image610.png", specs: "5Gbps SuperSpeed Camera & Peripheral Extension" },
+                    { name: "USB 2.0 1:4 Hub Extender over Cat6 (50M) & Fiber (100M)", model: "16EC01 - 16EC04", brand: "NT Connectivity", img: "extracted_media/image613.png", specs: "4-Port USB Hub at Receiver" },
+                    { name: "Audio Extenders over Cat6 (100M) & Fiber (10 KM — XLR/RCA/Optical)", model: "16FX01 - 16FX09", brand: "NT Pro Audio", img: "extracted_media/image656.png", specs: "4-Ch XLR Fiber, Bidirectional Stereo & Digital Audio" },
+                    { name: "HDMI KVM (USB) 1080p Over IP Extender 100M", model: "16JX06", brand: "NT Enterprise", img: "extracted_media/image619.png", specs: "Remote Workstation Keyboard, Mouse & Video Extension" }
+                ]
+            },
+            {
+                code: "n-50", group: "av-equipment", title: "Grab / Stream / Record Appliances",
+                cover: "extracted_media/image625.png",
+                desc: "HDMI/SDI USB 3.0 UVC capture cards and multi-channel PIP live streaming & recording appliances.",
+                items: [
+                    { name: "HDMI to USB 3.0 UVC Video Capture Grabber", model: "18BX02", brand: "NT Stream", img: "extracted_media/image620.png", specs: "Plug-and-Play 1080p60 / 4K Input Capture" },
+                    { name: "3G-SDI to USB 3.0 UVC Broadcast Grabber", model: "18BX03", brand: "NT Stream", img: "extracted_media/image621.png", specs: "Uncompressed SDI Camera to USB 3.0" },
+                    { name: "Dual 2x HDMI Input to USB 3.0 PIP Capture Grabber", model: "18BX04", brand: "NT Stream", img: "extracted_media/image622.png", specs: "Hardware Picture-in-Picture Dual Capture" },
+                    { name: "4-Channel HDMI Stream + Record + PIP/Quad + Switcher", model: "18DX02", brand: "NT Stream", img: "extracted_media/image625.png", specs: "Record / PIP / Quad / RTMP Stream / AV-over-IP Codec" },
+                    { name: "4-Channel SDI Stream + Record + PIP/Quad + Switcher", model: "18DX03", brand: "NT Stream", img: "extracted_media/image626.png", specs: "Broadcast 4-Ch SDI Recording & Streaming Director" },
+                    { name: "Multi-Format (DVI/SDI/VGA/HDMI/Composite) Streamer & Recorder", model: "18DX04 / 19AX09", brand: "NT Stream", img: "extracted_media/image624.png", specs: "All-in-One Encoder, Decoder, Recorder & Format Converter" }
+                ]
+            },
+            {
+                code: "n-51", group: "av-equipment", title: "Presentation Switchers",
+                cover: "extracted_media/image627.png",
+                desc: "HDMI 4K60 auto-switchers, DVI 8:1 switchers, component/composite switchers, and speaker selectors.",
+                items: [
+                    { name: "HDMI 4K@60Hz 5x1 & 3x1 Auto Switcher", model: "14BX01 / 14BX18", brand: "NT / Kramer", img: "extracted_media/image627.png", specs: "IR Remote & Auto-Sensing Input Switching" },
+                    { name: "DVI 8:1 Rackmount Switcher & Component 4:1 Switcher", model: "14EX02 / 14GX01", brand: "NT Video", img: "extracted_media/image633.png", specs: "RS-232 & Front Panel Push-Button Control" },
+                    { name: "2-In 4-Out Commercial Speaker Selector Switch", model: "DSS4", brand: "NT Pro Audio", img: "extracted_media/image634.png", specs: "Multi-Zone Speaker Routing" }
+                ]
+            },
+            {
+                code: "n-52", group: "av-equipment", title: "Multi-Input Switchers & HDBaseT Transmitters",
+                cover: "extracted_media/image635.png",
+                desc: "USB-C, DisplayPort, Mini-DP, HDMI, and VGA collaboration switchers with HDBaseT output.",
+                items: [
+                    { name: "4x1 Multi-Format Switcher (USB-C + DP + Mini-DP + HDMI to HDMI)", model: "14AX01", brand: "NT / Kramer", img: "extracted_media/image635.png", specs: "4K60 Auto-Switching Collaboration Box" },
+                    { name: "All-in-One Multi-Input Cable Tail Switcher (DP + Mini-DP + USB-C to HDMI)", model: "14AX02", brand: "NT Boardroom", img: "extracted_media/image636.png", specs: "Built-In Pigtail Leads for Huddle Tables" },
+                    { name: "6-Input (3x HDMI + 3x VGA) to HDMI + HDBaseT 100M Switcher", model: "14AX14", brand: "NT / Kramer", img: "extracted_media/image637.png", specs: "Includes 100M HDBaseT Output & Audio Embedding" }
+                ]
+            },
+            {
+                code: "n-53", group: "av-equipment", title: "HDMI / DVI / Component Video Splitters",
+                cover: "extracted_media/image639.png",
+                desc: "1x2, 1x4, and 1x8 4K@60Hz HDMI distribution amplifiers, DVI splitters, and component splitters.",
+                items: [
+                    { name: "HDMI 4K@60Hz 1:2 Distribution Amplifier Splitter", model: "13AX03", brand: "NT / Kramer", img: "extracted_media/image641.png", specs: "HDCP 2.2 | EDID Management" },
+                    { name: "HDMI 4K@60Hz 1:4 Distribution Amplifier Splitter", model: "13AX02", brand: "NT / Kramer", img: "extracted_media/image640.png", specs: "1-In 4-Out Simultaneous 4K60 Distribution" },
+                    { name: "HDMI 4K@60Hz 1:8 Rackmount Distribution Splitter", model: "13AX01 / 13AX06", brand: "NT / Kramer", img: "extracted_media/image639.png", specs: "1-In 8-Out Commercial Signage & Classroom Splitter" },
+                    { name: "DVI 1:4 / 1:8 & Component 1:3 / 1:8 Video Splitters", model: "13DX02 - 13EX04", brand: "NT Video", img: "extracted_media/image631.png", specs: "High-Bandwidth Cascadable Splitters" }
+                ]
+            },
+            {
+                code: "n-54", group: "av-equipment", title: "Matrix Switchers (HDMI, HDBaseT, SDI, VGA)",
+                cover: "extracted_media/image644.png",
+                desc: "4x2, 4x4, 8x8, and 16x16 matrix routing switchers with audio de-embedding, HDBaseT, and PIP.",
+                items: [
+                    { name: "HDMI 4K 4x2 Matrix Switcher with Auto-Switching", model: "17BX01 / 17BX19", brand: "NT / Kramer", img: "extracted_media/image646.png", specs: "Audio De-Embedding, IR & Downscaling" },
+                    { name: "HDMI 4K 4x4 Seamless Matrix Switcher", model: "17BX20", brand: "NT / Kramer", img: "extracted_media/image645.png", specs: "RS-232, IP & Web GUI Control" },
+                    { name: "HDMI 4K 8x8 Matrix Switcher with Audio De-Embedding", model: "17BX08", brand: "NT / Kramer", img: "extracted_media/image644.png", specs: "1U Rackmount Enterprise Matrix" },
+                    { name: "HDMI 4K 8x8 HDBaseT Matrix Switcher", model: "17BX12", brand: "NT / Kramer", img: "extracted_media/image647.png", specs: "Routes 8 Sources to 8 Remote HDBaseT Receivers" },
+                    { name: "3G-SDI 8x8 Matrix & 16x16 SDI PIP Matrix Switcher", model: "17EX01 / 22AX11", brand: "NT Broadcast", img: "extracted_media/image650.png", specs: "Broadcast Re-Clocking SDI Crosspoint Matrix" },
+                    { name: "VGA 4x4 & 8x8 Matrix Switcher", model: "17DX01 / 17DX02", brand: "NT Video", img: "extracted_media/image648.png", specs: "RS-232 Controlled Legacy Routing" }
+                ]
+            },
+            {
+                code: "n-55", group: "av-equipment", title: "Audio De-Embedders, DACs & Lip-Sync Correctors",
+                cover: "extracted_media/image652.png",
+                desc: "HDMI audio extractors, bi-directional Analog/Digital converters, and digital audio delay lip-sync boxes.",
+                items: [
+                    { name: "HDMI 4K Audio Extractor (Optical Toslink + Analog RCA/3.5mm)", model: "15BX12 / 15BX10", brand: "NT Pro Audio", img: "extracted_media/image652.png", specs: "Box & Cable-Type Models Available" },
+                    { name: "Bi-Directional Analog-to-Digital / Digital-to-Analog Converter", model: "15BX11", brand: "NT Pro Audio", img: "extracted_media/image653.png", specs: "Coax/Optical SPDIF <-> Stereo L/R RCA" },
+                    { name: "Audio Lip-Sync Delay Corrector", model: "15BX06", brand: "NT Pro Audio", img: "extracted_media/image654.png", specs: "Adjustable ms Delay for Video Wall Sync" }
+                ]
+            },
+            {
+                code: "n-56", group: "av-equipment", title: "Video Scalers & Format Converters",
+                cover: "extracted_media/image665.png",
+                desc: "Broadcast SDI/HDMI genlock scalers, VGA/Component/Composite to HDMI/DVI scalers, and multi-format converters.",
+                items: [
+                    { name: "VGA / Component to HDMI, DVI & Composite Scalers", model: "15FX05 - 15IX06", brand: "NT / Kramer", img: "extracted_media/image669.png", specs: "Up/Down Resolution Scaling with Audio Embedding" },
+                    { name: "HDMI to HDMI 4K UHD Scaler & HDMI to VGA/Composite Scaler", model: "15FX01 - 15FX14", brand: "NT / Kramer", img: "extracted_media/image670.png", specs: "HDCP & EDID Compliant" },
+                    { name: "Broadcast HDMI <-> 3G-SDI Converters & Scalers with Genlock", model: "15EX12 - 15EX20", brand: "NT Broadcast", img: "extracted_media/image665.png", specs: "Audio De-Embedding & Frame Sync Genlock" },
+                    { name: "Universal All-Format Multi-Input to HDMI/SDI Scaler", model: "14AX07 / 15EX10", brand: "NT Broadcast", img: "extracted_media/image664.png", specs: "DVI + SDI + HDMI + VGA + Component + Composite" }
+                ]
+            },
+            {
+                code: "n-57", group: "av-equipment", title: "Video Wall Processors & Controllers",
+                cover: "extracted_media/image57.png",
+                desc: "Hardware video wall controllers for 1x2, 2x2, 4x4 matrix walls and portrait screen rotation.",
+                items: [
+                    { name: "4K Video Wall 90°/180°/270° Rotation Processor", model: "21AX01", brand: "NT Video Wall", img: "extracted_media/image57.png", specs: "Real-Time Portrait & Artistic Video Wall Splicing" },
+                    { name: "4x4 Matrix Video Wall Controller & Splicing Processor", model: "21AX02", brand: "NT Video Wall", img: "extracted_media/image57.png", specs: "Supports 2x2, 1x4, 4x1, 3x3 & 4x4 Configurations" },
+                    { name: "1:2 Dual-Screen Video Wall Cascade Processor", model: "21AX08", brand: "NT Video Wall", img: "extracted_media/image57.png", specs: "Cascadable Multi-Screen Splicing" }
+                ]
+            },
+            {
+                code: "n-58", group: "av-equipment", title: "PIP & Quad Multi-Viewer Processors",
+                cover: "extracted_media/image625.png",
+                desc: "4x1 HDMI/SDI quad-view multiviewers and picture-in-picture processors with seamless switching.",
+                items: [
+                    { name: "HDMI 4:1 Quad Multi-Viewer & PIP Seamless Switcher", model: "22AX08", brand: "NT Video", img: "extracted_media/image625.png", specs: "Quad View, PIP, POP & Full-Screen Seamless Switching" },
+                    { name: "4-Ch HDMI / SDI PIP Multi-Viewer with Streaming & Recording", model: "18DX02 / 18DX03", brand: "NT Stream", img: "extracted_media/image626.png", specs: "Live Event Monitoring + Recording" },
+                    { name: "16x16 SDI Matrix Switcher with Integrated PIP Processing", model: "22AX11", brand: "NT Broadcast", img: "extracted_media/image651.png", specs: "Command Center Broadcast Multiviewer" }
+                ]
+            },
+            {
+                code: "n-59", group: "av-equipment", title: "NDI HX Video-Over-IP Encoders & Decoders",
+                cover: "extracted_media/image674.png",
+                desc: "4K HDMI/UVC NDI HX encoders, decoders, and multi-input NDI streaming/recording gateways.",
+                items: [
+                    { name: "4K HDMI + USB UVC to NDI HX Encoder", model: "16MA01", brand: "NT IP Workflow", img: "extracted_media/image674.png", specs: "1G Network PoE | Converts HDMI & USB Cameras to NDI" },
+                    { name: "4K NDI HX to HDMI + USB UVC Decoder", model: "16MA02", brand: "NT IP Workflow", img: "extracted_media/image673.png", specs: "Outputs NDI Streams to HDMI Display & USB Webcam" },
+                    { name: "1080p HDMI + 3G-SDI Bi-Directional NDI HX Encoder/Decoder", model: "16MA03", brand: "NT IP Workflow", img: "extracted_media/image676.png", specs: "Includes SD Recording, PIP & RTMP Streaming" },
+                    { name: "4-Channel HDMI NDI HX Encoder/Decoder with Quad/PIP", model: "16MA04", brand: "NT IP Workflow", img: "extracted_media/image625.png", specs: "4-Ch NDI Encoding, Recording & Multiview" },
+                    { name: "Multi-Input (DVI/SDI/VGA/HDMI/Composite) NDI HX Codec", model: "16MA05", brand: "NT IP Workflow", img: "extracted_media/image675.png", specs: "Universal Legacy-to-NDI Bridge with Recording" }
+                ]
+            },
+            {
+                code: "n-60", group: "av-equipment", title: "SDVoE 4K60 Uncompressed AV-over-IP",
+                cover: "extracted_media/image678.png",
+                desc: "Zero-latency 10G Copper & Fiber SDVoE 4K60 transceivers with Video Wall, Multiview, Matrix, and KVM.",
+                items: [
+                    { name: "HDMI + Audio 4K60 to SDVoE Transmitter (Copper + Fiber + PoE)", model: "16MA01-SDVOE", brand: "NT SDVoE", img: "extracted_media/image678.png", specs: "Supports PIP, Video Wall, KVM & Matrix over 10G Network" },
+                    { name: "SDVoE to HDMI + Audio 4K60 Receiver (Copper + Fiber + PoE)", model: "16MA02-SDVOE", brand: "NT SDVoE", img: "extracted_media/image677.png", specs: "Zero-Frame Latency 4K60 4:4:4 Receiver" }
+                ]
+            },
+            {
+                code: "n-61", group: "av-equipment", title: "Acoustic Office Telephone Booths & Meeting Pods",
+                cover: "extracted_media/image679.png",
+                desc: "Soundproof modular office pods (Sizes S, M, L) with double tempered glass, 4000K LED lighting, ventilation, and power/USB.",
+                items: [
+                    { name: "Acoustic Solo Pod — Size S (Ext: W1159 x D1000 x H2200 mm)", model: "34AA01", brand: "NT Acoustic Pods", img: "extracted_media/image679.png", specs: "Int: 1017x840x2040mm | Double Tempered Glass, 4000K LED, Ventilation, Power+USB" },
+                    { name: "Acoustic 2-Person Pod — Size M (Ext: W1159 x D1519 x H2200 mm)", model: "34AA02", brand: "NT Acoustic Pods", img: "extracted_media/image680.png", specs: "Int: 1017x1359x2040mm | 1cm Black Carpet, Acoustic Insulation, Power+USB" },
+                    { name: "Acoustic 4-Person Huddle Pod — Size L (Ext: W1559 x D2201 x H2200 mm)", model: "34AA03", brand: "NT Acoustic Pods", img: "extracted_media/image681.png", specs: "Int: 2040x1399x2040mm | Soundproof Meeting Pod with Ventilation & Power" }
+                ]
+            }
+        ];
+
+        let currentCategoryGroup = 'all';
+        let activeCategoryObj = null;
+
+        function renderBrandCards(containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = AUTHORIZED_BRANDS.map(brand => `
+                <div class="brand-card">
+                    <span>${brand}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderMainCategories() {
+            const grid = document.getElementById('categoryGrid');
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+
+            const filtered = CATALOG_DATA.filter(cat => {
+                const matchesTab = (currentCategoryGroup === 'all' || cat.group === currentCategoryGroup);
+                const matchesText = !query ||
+                    cat.title.toLowerCase().includes(query) ||
+                    cat.desc.toLowerCase().includes(query) ||
+                    cat.code.toLowerCase().includes(query) ||
+                    cat.items.some(i => i.name.toLowerCase().includes(query) || i.model.toLowerCase().includes(query));
+                return matchesTab && matchesText;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 3rem; color:#94a3b8;"><h3>No matching categories or products found</h3></div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(cat => `
+                <div class="product-card" onclick="openCategory('${cat.code}')">
+                    <span class="product-badge">${cat.code}</span>
+                    <span class="item-count-badge">${cat.items.length} Models</span>
+                    <div class="product-img-wrapper">
+                        <img src="${cat.cover}" alt="${cat.title}" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <div>
+                            <h3 class="product-title">${cat.title}</h3>
+                            <p class="product-desc">${cat.desc}</p>
+                        </div>
+                        <span class="view-cat-btn">View All ${cat.items.length} Products →</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterCategory(group, btn) {
+            currentCategoryGroup = group;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderMainCategories();
+        }
+
+        function applyFilters() {
+            renderMainCategories();
+        }
+
+        function openCategory(code) {
+            const cat = CATALOG_DATA.find(c => c.code === code);
+            if (!cat) return;
+            activeCategoryObj = cat;
+
+            document.getElementById('subpageTitle').textContent = `${cat.title} (${cat.code})`;
+            document.getElementById('subpageSubtitle').textContent = `${cat.items.length} Product Series & Models Available — Click any image to enlarge or Enquire Now`;
+            document.getElementById('skuSearchInput').value = '';
+
+            renderSkus(cat.items);
+
+            document.getElementById('catalog-view').style.display = 'none';
+            document.getElementById('detail-view').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            history.pushState({ code: code }, cat.title, `#category=${code}`);
+        }
+
+        function renderSkus(items) {
+            const skuGrid = document.getElementById('skuGrid');
+            if (items.length === 0) {
+                skuGrid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 3rem; color:#94a3b8;">No matching models found in this category.</div>`;
+                return;
+            }
+
+            skuGrid.innerHTML = items.map(item => {
+                const subject = encodeURIComponent(`Product Inquiry: ${item.name} (Model/Part: ${item.model})`);
+                const body = encodeURIComponent(`Hello AVS Team,\n\nI would like to enquire about the following product:\n\n• Product Name: ${item.name}\n• Model / Part No: ${item.model}\n• Category: ${activeCategoryObj.title} (${activeCategoryObj.code})\n• Specifications: ${item.specs}\n\nPlease share pricing and availability.\n\nThank you.`);
+                const mailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=sales@avsolutionsapac.in&su=${subject}&body=${body}`;
+
+                return `
+                    <div class="sku-card">
+                        <div class="sku-img-box" onclick="openLightbox('${item.img}')">
+                            <img src="${item.img}" alt="${item.name}" loading="lazy">
+                        </div>
+                        <div class="sku-body">
+                            <div>
+                                <div class="sku-brand">Brand: ${item.brand}</div>
+                                <h4 class="sku-title">${item.name}</h4>
+                                <div class="sku-meta">
+                                    <strong>Model / Part No:</strong> ${item.model} &nbsp;|&nbsp; <strong>Warranty:</strong> 1 Yr
+                                </div>
+                                <div class="sku-variants">${item.specs}</div>
+                            </div>
+                            <a href="${mailUrl}" target="_blank" class="sku-enquire-btn">Enquire Now</a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterSkus() {
+            if (!activeCategoryObj) return;
+            const q = document.getElementById('skuSearchInput').value.toLowerCase().trim();
+            const filtered = activeCategoryObj.items.filter(item =>
+                item.name.toLowerCase().includes(q) ||
+                item.model.toLowerCase().includes(q) ||
+                item.brand.toLowerCase().includes(q) ||
+                item.specs.toLowerCase().includes(q)
+            );
+            renderSkus(filtered);
+        }
+
+        function backToCatalog() {
+            document.getElementById('detail-view').style.display = 'none';
+            document.getElementById('catalog-view').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            history.pushState({}, 'Products', window.location.pathname);
+        }
+
+        window.addEventListener('popstate', () => {
+            if (window.location.hash.startsWith('#category=')) {
+                const code = window.location.hash.replace('#category=', '');
+                openCategory(code);
+            } else {
+                document.getElementById('detail-view').style.display = 'none';
+                document.getElementById('catalog-view').style.display = 'block';
+            }
+        });
+
+        function toggleMenu() {
+            document.getElementById('nav-menu').classList.toggle('active');
+        }
+
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('lightbox');
+            document.getElementById('lightbox-img').src = imageSrc;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderBrandCards('mainBrandsGrid');
+            renderBrandCards('subpageBrandsGrid');
+            renderMainCategories();
+            if (window.location.hash.startsWith('#category=')) {
+                const code = window.location.hash.replace('#category=', '');
+                openCategory(code);
+            }
+        });
+    </script>
+</body>
+</html>
